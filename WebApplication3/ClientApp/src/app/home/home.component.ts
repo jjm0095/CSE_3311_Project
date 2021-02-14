@@ -27,6 +27,7 @@ secondsToString(value: number): string {
     buttonText: "Start",
     timerId: null,
     paused: true,
+    iconClass: "glyphicon glyphicon-play",
   };
 
   shortBreakTimer = {
@@ -35,6 +36,7 @@ secondsToString(value: number): string {
     buttonText: "Start",
     timerId: null,
     paused: true,
+    iconClass: "glyphicon glyphicon-play",
   };
 
   longBreakTimer = {
@@ -43,6 +45,7 @@ secondsToString(value: number): string {
     buttonText: "Start",
     timerId: null,
     paused: true,
+    iconClass: "glyphicon glyphicon-play",
   }
 
   timer: number = 90;
