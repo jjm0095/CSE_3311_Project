@@ -1,4 +1,32 @@
-<h1>Pomodoro Timer!</h1>
-<div class="play-container">
-  <p>Start the Timer: <span (click)="countdown()">Begin </span> <span (click)="playCountdown()">Play </span> <span (click)="pauseCountdown()">Pause </span>{{ timer }} seconds</p>
+<div>
+  <h1 style="text-align: center;">Pomodoro Timer</h1>
+  <br />
+  <div class="card" style="width: 40rem; margin: auto;">
+    <div class="card-body d-flex justify-content-center">
+      <mat-tab-group>
+        <mat-tab label="Pomodoro">
+          <h1 class="m-4" style="text-align: center; font-size: 120px;">{{pomodoroTimer.timeString}}</h1>
+          <div class="d-flex justify-content-center">
+            <button type="button" class="btn btn-primary btn-lg mx-3" (click)="onPomodoroButton()">{{pomodoroTimer.buttonText}}</button>
+          </div>
+        </mat-tab>
+        <mat-tab label="Short Break">
+          <h1 class="m-4" style="text-align: center; font-size: 120px;">{{shortBreakTimer.timeString}}</h1>
+          <div class="d-flex justify-content-center">
+            <button type="button" class="btn btn-primary btn-lg mx-3" (click)="onShortBreakButton()()">{{shortBreakTimer.buttonText}}</button>
+          </div>
+        </mat-tab>
+        <mat-tab label="Long Break">
+          <h1 class="m-4" style="text-align: center; font-size: 120px;">{{longBreakTimer.timeString}}</h1>
+          <div class="d-flex justify-content-center">
+            <button type="button" class="btn btn-primary btn-lg mx-3" (click)="onLongBreakButton()()">{{longBreakTimer.buttonText}}</button>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
 </div>
+
+<!--<div class="play-container">
+  <p>Start the Timer: <span (click)="countdown()">Begin </span> <span (click)="playCountdown()">Play </span> <span (click)="pauseCountdown()">Pause </span>{{ timer }} seconds</p>
+</div>-->
