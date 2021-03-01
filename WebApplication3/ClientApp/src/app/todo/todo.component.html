@@ -1,0 +1,13 @@
+<h1>To-Do List</h1>
+<div class="tasks">
+  <div class="task-input">
+    <input type="text" placeholder="Add a task" name="inputTask" class="todo-input" [(ngModel)]="inputTask"/>
+    <button class="add" (click)= "addTask()" > + </button>
+  </div>
+  <div class="todo" *ngFor="let task of tasks; let index = index;">
+    <div class="content">{{task.content}}</div>
+    <button class="remove"(click)="deleteTask(index)"> - </button>
+  </div>
+</div>
+
+
