@@ -1,0 +1,69 @@
+.todo-list-card{
+    width: 300px;
+    margin: auto;
+}
+.card-title {
+  text-align: center;
+}
+.tasks .add{
+    margin-top: 10px;
+    float: right;
+}
+
+
+
+/*.tasks {
+  border-style: solid;
+  border-color: #0094ff;
+  border-radius: 20px 20px 0px 0px;
+  float: right;
+  background: #ffffff;
+  width: 500px;
+}
+
+.task-input {
+  width: 100%;
+  border-radius: 16px 16px 0px 0px;
+  /*display: flex;
+  padding: 10px 15px;
+  background-color: #0094ff;
+}
+
+  .task-input .todo-input {
+    border-radius: 12px 0px 0px 0px;
+  }
+
+  .list-element .add {
+    width: 50px;
+    transition-duration: 0.4s;
+    border-radius: 0px 12px 0px 0px;
+    float: right;
+  }
+
+    .list-element .add:hover {
+      background-color: #0094ff;
+      color: white;
+    }
+
+.todo {
+  display: flex;
+  padding: 10px 10px;
+  border-bottom: 1px solid #808080
+}
+
+  .todo .content {
+    flex: 1 1 100%;
+  }
+
+  .todo .remove {
+    border-radius: 12px;
+    border-color: #ff0000;
+    transition-duration: 0.4s;
+    float: right;
+  }
+
+    .todo .remove:hover {
+      background-color: #ff0000;
+      color: white;
+    }
+    */

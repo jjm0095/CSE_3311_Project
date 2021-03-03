@@ -13,6 +13,12 @@ import { LoginComponent } from './login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
+import { ToDoComponent } from './todo/todo.component';
+import { MatInputModule, MatOptionModule, MatSelectModule, MatIconModule } from '@angular/material';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatListModule } from '@angular/material';
+import { MatCardModule } from '@angular/material';
+import { MatDividerModule} from '@angular/material'
 
 @NgModule({
   declarations: [
@@ -21,7 +27,8 @@ import { MatButtonModule } from '@angular/material/button';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    LoginComponent
+    LoginComponent,
+    ToDoComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -32,10 +39,19 @@ import { MatButtonModule } from '@angular/material/button';
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'login', component: LoginComponent },
+      { path: 'todo', component: ToDoComponent},
     ]),
     BrowserAnimationsModule,
     MatTabsModule,
-    MatButtonModule
+    MatButtonModule,
+    MatInputModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatIconModule,
+    MatListModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    MatDividerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

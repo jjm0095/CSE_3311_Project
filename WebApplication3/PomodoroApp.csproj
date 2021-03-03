@@ -25,10 +25,14 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\login\login.component.ts" />
+    <None Remove="ClientApp\src\app\models\toDo.ts" />
+    <None Remove="ClientApp\src\app\todo\todo.component.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\login\login.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\toDo.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\todo\todo.component.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
