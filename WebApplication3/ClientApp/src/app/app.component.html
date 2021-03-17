@@ -1,7 +1,5 @@
 <header>
   <div class="container my-3 d-flex justify-content-center">
-    <!--<a href="#" class="logo">MyPomodoro</a>-->
-    <!--<nav>-->
     <ul class="nav nav-pills">
       <li class="nav-item">
         <a class="nav-link" href="#" routerLink="/">Home</a>
@@ -9,16 +7,21 @@
       <li class="nav-item">
         <a class="nav-link" href="#" routerLink="/login">Login or Sign Up</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#" routerLink="/todo">To-Do List</a>
-      </li>
+      <!--<li class="nav-item">
+        <a class="nav-link" href="#" (click)="todo.toggle()">To-Do List</a>
+      </li>-->
     </ul>
-    <!--</nav>-->
   </div>
 </header>
 
+<!--<mat-sidenav-container style="background-color:white">
+  <mat-sidenav #todo position="end" mode="side">
+    <app-todo></app-todo>-->
+  <!--</mat-sidenav>-->
+  <!--<mat-sidenav-content>-->
 <div class="container">
   <router-outlet></router-outlet>
 </div>
-    
+  <!--</mat-sidenav-content>
+</mat-sidenav-container>-->
 

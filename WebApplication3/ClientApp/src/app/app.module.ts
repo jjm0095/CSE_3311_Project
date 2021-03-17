@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
@@ -18,7 +17,10 @@ import { MatInputModule, MatOptionModule, MatSelectModule, MatIconModule } from 
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatListModule } from '@angular/material';
 import { MatCardModule } from '@angular/material';
-import { MatDividerModule} from '@angular/material'
+import { MatDividerModule } from '@angular/material'
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [
@@ -52,6 +54,9 @@ import { MatDividerModule} from '@angular/material'
     ReactiveFormsModule,
     MatCardModule,
     MatDividerModule,
+    MatCheckboxModule,
+    MatSnackBarModule,
+    MatSidenavModule
   ],
   providers: [],
   bootstrap: [AppComponent]

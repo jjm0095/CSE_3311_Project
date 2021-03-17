@@ -1,9 +1,9 @@
 .todo-list-card{
-    width: 300px;
-    margin: auto;
+    width: 27rem;
+    height: auto;
 }
 .card-title {
-  text-align: center;
+  text-align: left;
 }
 .tasks .add{
     margin-top: 10px;

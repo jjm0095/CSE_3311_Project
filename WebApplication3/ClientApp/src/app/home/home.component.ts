@@ -13,7 +13,16 @@ secondsToString(value: number): string {
   date.setSeconds(value);
   var timeString = date.toISOString().substr(14, 5);
   return timeString;
-}
+  }
+
+  apps = {
+    todo: "todo",
+    break: "break", // Break suggestions
+    sounds: "sounds", // Calming sounds
+    breathe: "breathe" // Breathing exercises
+  }
+
+  currentApp = this.apps.todo;
 
   intervals = {
     pomodoro: 1500,
@@ -203,6 +212,10 @@ secondsToString(value: number): string {
         this.longBreakTimer.timeString = this.secondsToString(this.longBreakTimer.timeSeconds);
       }
     }, 1000);
+  }
+
+  changeApp(app: string) {
+    this.currentApp = app;
   }
 
 }
