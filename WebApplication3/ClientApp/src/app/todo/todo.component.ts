@@ -30,7 +30,7 @@ export class ToDoComponent {
     ]
     this.completedTasks = [
       {
-        content: 'you have completed this task',
+        content: 'Test: you have completed this task',
         selected: false,
         deleteSelected: false
       }

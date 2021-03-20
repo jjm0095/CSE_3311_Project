@@ -21,6 +21,53 @@
           <button mat-raised-button color="primary" class="btn btn-primary btn-lg mx-3" (click)="onLongBreakButton()()">{{longBreakTimer.buttonText}}</button>
         </div>
       </mat-tab>
+      
+      <mat-tab label="Timer Settings">
+        <h1 class="m-4" style="text-align: center; font-size: auto;"></h1>
+        <div class>
+          <mat-list class="list">
+            <!-- CHnages the Pomodoro Timer -->
+            <mat-list-item class="PomodoroTimer-settings">
+              <mat-label style="width: 300px">Pomodoro Timer:    {{pomodoroTimer.timeString}}</mat-label>
+              <mat-form-field style="width: 100px">
+                <input type="number" name="PomodoroMinutes" min="0" matInput [(ngModel)]="PomodoroMinutes" />
+              </mat-form-field>
+              <p> :</p>
+              <mat-form-field style="width: 100px">
+                <input type="number" name="PomodoroSeconds" min="0" max="59" matInput [(ngModel)]="PomodoroSeconds" />
+              </mat-form-field>
+              <button mat-raised-button color="primary" class="btn btn-primary btn-lg mx-3" (click)="onSavePomodoroTimerConfig()()">Save</button>
+              <mat-divider></mat-divider>
+            </mat-list-item>
+            <!-- CHnages the Short Timer -->
+            <mat-list-item class="ShortTimer-settings">
+              <mat-label style="width: 300px">Short Break Timer:    {{shortBreakTimer.timeString}}</mat-label>
+              <mat-form-field style="width: 100px">
+                <input type="number" name="ShortBreakMinutes" min="0" matInput [(ngModel)]="ShortBreakMinutes" />
+              </mat-form-field>
+              <p> :</p>
+              <mat-form-field style="width: 100px">
+                <input type="number" name="ShortBreakSeconds" min="0" max="59" matInput [(ngModel)]="ShortBreakSeconds" />
+              </mat-form-field>
+              <button mat-raised-button color="primary" class="btn btn-primary btn-lg mx-3" (click)="onSaveShortTimerConfig()()">Save</button>
+              <mat-divider></mat-divider>
+            </mat-list-item>
+            <!-- CHnages the Pomodoro Timer -->
+            <mat-list-item class="LongTimer-settings">
+              <mat-label style="width: 300px">Long Break Timer:    {{longBreakTimer.timeString}}</mat-label>
+              <mat-form-field style="width: 100px">
+                <input type="number" name="LongBreakMinutes" min="0" matInput [(ngModel)]="LongBreakMinutes" />
+              </mat-form-field>
+              <p> :</p>
+              <mat-form-field style="width: 100px">
+                <input type="number" name="LongBreakSeconds" min="0" max="59" matInput [(ngModel)]="LongBreakSeconds" />
+              </mat-form-field>
+              <button mat-raised-button color="primary" class="btn btn-primary btn-lg mx-3" (click)="onSaveLongTimerConfig()()">Save</button>
+              <mat-divider></mat-divider>
+            </mat-list-item>
+          </mat-list>
+        </div>
+      </mat-tab>
     </mat-tab-group>
   </div>
 </div>

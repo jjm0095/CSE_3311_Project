@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PortalModule } from '@angular/cdk/portal';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -8,12 +9,17 @@ import { PortalModule } from '@angular/cdk/portal';
 
 
 export class HomeComponent implements OnInit {
+
+  PomodoroMinutes: number = 0;
+  PomodoroSeconds: number = 0;
+
 secondsToString(value: number): string {
   var date = new Date(0);
   date.setSeconds(value);
   var timeString = date.toISOString().substr(14, 5);
   return timeString;
   }
+
 
   apps = {
     todo: "todo",
@@ -31,6 +37,7 @@ secondsToString(value: number): string {
   };
 
   pomodoroTimer = {
+    
     timeSeconds: this.intervals.pomodoro,
     timeString: this.secondsToString(this.intervals.pomodoro),
     buttonText: "Start",
@@ -65,6 +72,8 @@ secondsToString(value: number): string {
 
   }
 
+ 
+
   countdown() {
     
       let intervalID = setInterval(() => {
@@ -86,6 +95,7 @@ secondsToString(value: number): string {
       this.pause = false;
     }
   }
+
 
   getButtonText(value: boolean): string {
     return value ? "Start" : "Pause";
@@ -212,6 +222,10 @@ secondsToString(value: number): string {
         this.longBreakTimer.timeString = this.secondsToString(this.longBreakTimer.timeSeconds);
       }
     }, 1000);
+  }
+
+  onSavePomodoroTimerConfig() {
+
   }
 
   changeApp(app: string) {
