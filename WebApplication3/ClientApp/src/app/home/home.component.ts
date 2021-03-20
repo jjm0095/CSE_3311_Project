@@ -228,6 +228,14 @@ secondsToString(value: number): string {
 
   }
 
+  onSaveShortTimerConfig() {
+
+  }
+
+  onSaveLongTimerConfig() {
+
+  }
+
   changeApp(app: string) {
     this.currentApp = app;
   }
