@@ -2,4 +2,5 @@
 export class toDo {
   content: string;
   selected: boolean;
+  deleteSelected: boolean;
 }
