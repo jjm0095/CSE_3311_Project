@@ -42,7 +42,7 @@ export class ToDoComponent {
     this.removedTasks.push(this.tasks[index]);
     this.completedTasks.push(this.tasks[index]);
     this.tasks.splice(index, 1);
-    this.openUndoBar();
+    this.openUndoBarCompCheck();
   }
   deleteTask(index: number) {
     this.tasks[index].selected = false;
@@ -65,6 +65,16 @@ export class ToDoComponent {
   }
 
   openUndoBar() {
+    let undoBarRef = this._undoBar.open("Task completed", "Undo", { duration: 10000, });
+
+    undoBarRef.onAction().subscribe(() => {
+      this._undoBar.dismiss();
+      this.tasks.push(this.removedTasks.pop());
+      //this.removedCompleted.push(this.completedTasks.pop());
+      this._undoBar.open("Action undone", null, { duration: 5000 });
+    });
+  }
+  openUndoBarCompCheck() {
     let undoBarRef = this._undoBar.open("Task completed", "Undo", { duration: 10000, });
 
     undoBarRef.onAction().subscribe(() => {
