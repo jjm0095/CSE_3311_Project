@@ -13,7 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
 import { ToDoComponent } from './todo/todo.component';
-import { MatInputModule, MatOptionModule, MatSelectModule, MatIconModule } from '@angular/material';
+import { MatInputModule, MatOptionModule, MatSelectModule, MatIconModule, MatDialogModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatListModule } from '@angular/material';
 import { MatCardModule } from '@angular/material';
@@ -21,6 +21,7 @@ import { MatDividerModule } from '@angular/material'
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { BreakComponent } from './break/break.component'
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     FetchDataComponent,
     LoginComponent,
     ToDoComponent,
+    BreakComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -42,7 +44,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'login', component: LoginComponent },
-      { path: 'todo', component: ToDoComponent},
+      { path: 'todo', component: ToDoComponent },
+      {path: 'break', component: BreakComponent},
     ]),
     BrowserAnimationsModule,
     MatTabsModule,

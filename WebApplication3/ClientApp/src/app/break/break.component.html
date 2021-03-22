@@ -1,0 +1,15 @@
+
+<mat-card class="m-3">
+  <mat-card-subtitle>Suggestions and Reminders</mat-card-subtitle>
+  <button mat-raised-button (click)="pickSuggestion()" style="margin: 8px">New Suggestion</button>
+  <mat-divider></mat-divider>
+  <h1 class="m-4" style="font-size: 25px;">{{currentBreak}}</h1>
+  <mat-divider></mat-divider>
+  <mat-form-field class="tasks-input-field">
+    <mat-label>Add a Suggestion</mat-label>
+    <input type="text" name="newSuggestion" matInput [(ngModel)]="newSuggestion" />
+  </mat-form-field>
+  <button mat-raised-button (click)="addSuggestion()">Add</button>
+
+
+</mat-card>

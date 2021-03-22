@@ -91,7 +91,7 @@
         </div>
         <div class="col-lg">
           <app-todo *ngIf="currentApp == apps.todo"></app-todo>
-          <div *ngIf="currentApp == apps.break" class="card"></div>
+          <app-break *ngIf="currentApp == apps.break"></app-break>
           <div *ngIf="currentApp == apps.sounds" class="card"></div>
           <div *ngIf="currentApp == apps.breathe" class="card"></div>
         </div>
