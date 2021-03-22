@@ -12,6 +12,10 @@ export class HomeComponent implements OnInit {
 
   PomodoroMinutes: number = 0;
   PomodoroSeconds: number = 0;
+  LongBreakMinutes: number = 0;
+  LongBreakSeconds: number = 0;
+  ShortBreakMinutes: number = 0;
+  ShortBreakSeconds: number = 0;
 
 secondsToString(value: number): string {
   var date = new Date(0);
@@ -35,6 +39,11 @@ secondsToString(value: number): string {
     shortBreak: 300,
     longBreak: 900,
   };
+  starts = {
+    pomodoro: 1500,
+    shortBreak: 300,
+    longBreak: 900,
+  };
 
   pomodoroTimer = {
     
@@ -44,6 +53,8 @@ secondsToString(value: number): string {
     timerId: null,
     paused: true,
     iconClass: "glyphicon glyphicon-play",
+    startTimeSeconds: this.starts.pomodoro,
+    startTimeString: this.secondsToString(this.starts.pomodoro)
   };
 
   shortBreakTimer = {
@@ -53,6 +64,8 @@ secondsToString(value: number): string {
     timerId: null,
     paused: true,
     iconClass: "glyphicon glyphicon-play",
+    startTimeSeconds: this.starts.shortBreak,
+    startTimeString: this.secondsToString(this.starts.shortBreak)
   };
 
   longBreakTimer = {
@@ -62,6 +75,8 @@ secondsToString(value: number): string {
     timerId: null,
     paused: true,
     iconClass: "glyphicon glyphicon-play",
+    startTimeSeconds: this.starts.longBreak,
+    startTimeString: this.secondsToString(this.starts.longBreak)
   }
 
   timer: number = 90;
@@ -225,15 +240,30 @@ secondsToString(value: number): string {
   }
 
   onSavePomodoroTimerConfig() {
-
+    this.intervals.pomodoro = this.PomodoroMinutes * 60 + this.PomodoroSeconds
+    this.pomodoroTimer.timeSeconds = this.intervals.pomodoro;
+    this.pomodoroTimer.timeString = this.secondsToString(this.intervals.pomodoro)
+    this.starts.pomodoro = this.PomodoroMinutes * 60 + this.PomodoroSeconds
+    this.pomodoroTimer.startTimeSeconds = this.starts.pomodoro;
+    this.pomodoroTimer.startTimeString = this.secondsToString(this.starts.pomodoro)
   }
 
   onSaveShortTimerConfig() {
-
+    this.intervals.shortBreak = this.ShortBreakMinutes * 60 + this.ShortBreakSeconds
+    this.shortBreakTimer.timeSeconds = this.intervals.shortBreak;
+    this.shortBreakTimer.timeString = this.secondsToString(this.intervals.shortBreak)
+    this.starts.shortBreak = this.ShortBreakMinutes * 60 + this.ShortBreakSeconds
+    this.shortBreakTimer.startTimeSeconds = this.starts.shortBreak;
+    this.shortBreakTimer.startTimeString = this.secondsToString(this.starts.shortBreak)
   }
 
   onSaveLongTimerConfig() {
-
+    this.intervals.longBreak = this.LongBreakMinutes * 60 + this.LongBreakSeconds
+    this.longBreakTimer.timeSeconds = this.intervals.longBreak;
+    this.longBreakTimer.timeString = this.secondsToString(this.intervals.longBreak)
+    this.starts.longBreak = this.LongBreakMinutes * 60 + this.LongBreakSeconds
+    this.longBreakTimer.startTimeSeconds = this.starts.longBreak;
+    this.longBreakTimer.startTimeString = this.secondsToString(this.starts.longBreak)
   }
 
   changeApp(app: string) {

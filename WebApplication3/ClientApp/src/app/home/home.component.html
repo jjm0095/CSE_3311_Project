@@ -28,20 +28,20 @@
           <mat-list class="list">
             <!-- CHnages the Pomodoro Timer -->
             <mat-list-item class="PomodoroTimer-settings">
-              <mat-label style="width: 300px">Pomodoro Timer:    {{pomodoroTimer.timeString}}</mat-label>
+              <mat-label style="width: 300px">Pomodoro Timer:    {{pomodoroTimer.startTimeString}}</mat-label>
               <mat-form-field style="width: 100px">
-                <input type="number" name="PomodoroMinutes" min="0" matInput [(ngModel)]="PomodoroMinutes" />
+                <input type="number" name="PomodoroMinutes" min="0" matInput [(ngModel)]="PomodoroMinutes"/>
               </mat-form-field>
               <p> :</p>
               <mat-form-field style="width: 100px">
                 <input type="number" name="PomodoroSeconds" min="0" max="59" matInput [(ngModel)]="PomodoroSeconds" />
               </mat-form-field>
-              <button mat-raised-button color="primary" class="btn btn-primary btn-lg mx-3" (click)="onSavePomodoroTimerConfig()()">Save</button>
+              <button mat-raised-button color="primary" class="btn btn-primary btn-lg mx-3" (click)="onSavePomodoroTimerConfig()">Save</button>
               <mat-divider></mat-divider>
             </mat-list-item>
             <!-- CHnages the Short Timer -->
             <mat-list-item class="ShortTimer-settings">
-              <mat-label style="width: 300px">Short Break Timer:    {{shortBreakTimer.timeString}}</mat-label>
+              <mat-label style="width: 300px">Short Break Timer:    {{shortBreakTimer.startTimeString}}</mat-label>
               <mat-form-field style="width: 100px">
                 <input type="number" name="ShortBreakMinutes" min="0" matInput [(ngModel)]="ShortBreakMinutes" />
               </mat-form-field>
@@ -49,12 +49,12 @@
               <mat-form-field style="width: 100px">
                 <input type="number" name="ShortBreakSeconds" min="0" max="59" matInput [(ngModel)]="ShortBreakSeconds" />
               </mat-form-field>
-              <button mat-raised-button color="primary" class="btn btn-primary btn-lg mx-3" (click)="onSaveShortTimerConfig()()">Save</button>
+              <button mat-raised-button color="primary" class="btn btn-primary btn-lg mx-3" (click)="onSaveShortTimerConfig()">Save</button>
               <mat-divider></mat-divider>
             </mat-list-item>
             <!-- CHnages the Pomodoro Timer -->
             <mat-list-item class="LongTimer-settings">
-              <mat-label style="width: 300px">Long Break Timer:    {{longBreakTimer.timeString}}</mat-label>
+              <mat-label style="width: 300px">Long Break Timer:    {{longBreakTimer.startTimeString}}</mat-label>
               <mat-form-field style="width: 100px">
                 <input type="number" name="LongBreakMinutes" min="0" matInput [(ngModel)]="LongBreakMinutes" />
               </mat-form-field>
@@ -62,7 +62,7 @@
               <mat-form-field style="width: 100px">
                 <input type="number" name="LongBreakSeconds" min="0" max="59" matInput [(ngModel)]="LongBreakSeconds" />
               </mat-form-field>
-              <button mat-raised-button color="primary" class="btn btn-primary btn-lg mx-3" (click)="onSaveLongTimerConfig()()">Save</button>
+              <button mat-raised-button color="primary" class="btn btn-primary btn-lg mx-3" (click)="onSaveLongTimerConfig()">Save</button>
               <mat-divider></mat-divider>
             </mat-list-item>
           </mat-list>
@@ -93,7 +93,7 @@
           <app-todo *ngIf="currentApp == apps.todo"></app-todo>
           <app-break *ngIf="currentApp == apps.break"></app-break>
           <div *ngIf="currentApp == apps.sounds" class="card"></div>
-          <div *ngIf="currentApp == apps.breathe" class="card"></div>
+          <app-breathe *ngIf="currentApp == apps.breathe"></app-breathe>
         </div>
       </div>
     </mat-card-content>

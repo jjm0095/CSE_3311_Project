@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\break\break.component.ts" />
+    <None Remove="ClientApp\src\app\breathe\breathe.component.ts" />
     <None Remove="ClientApp\src\app\login\login.component.ts" />
     <None Remove="ClientApp\src\app\models\Break.ts" />
     <None Remove="ClientApp\src\app\models\toDo.ts" />
@@ -33,6 +34,7 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\break\break.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\breathe\breathe.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\login\login.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\Break.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\toDo.ts" />

@@ -22,7 +22,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { BreakComponent } from './break/break.component'
-
+import { BreatheComponent } from './breathe/breathe.component';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { BreakComponent } from './break/break.component'
     LoginComponent,
     ToDoComponent,
     BreakComponent,
+    BreatheComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -45,7 +47,8 @@ import { BreakComponent } from './break/break.component'
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'login', component: LoginComponent },
       { path: 'todo', component: ToDoComponent },
-      {path: 'break', component: BreakComponent},
+      { path: 'break', component: BreakComponent },
+      { path: 'breathe', component: BreatheComponent },
     ]),
     BrowserAnimationsModule,
     MatTabsModule,

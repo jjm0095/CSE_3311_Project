@@ -14,6 +14,8 @@ export class BreakComponent {
   newSuggestion: string = '';
 
   currentBreak: string = '';
+  currentBreakI: number;
+
   //this.currentBreak.suggestion = 'hello';
 
   ngOnInit(): void {
@@ -29,15 +31,39 @@ export class BreakComponent {
         suggestion: 'Let your eyes take a break from looking at the screen',
       }
     ]
+    this.timesUsed = [
+      {
+        timesUsed: 0
+
+      },
+      {
+        timesUsed: 0 
+      },
+      {
+        timesUsed: 0
+      }
+    ]
     this.pickSuggestion();
   }
 
   pickSuggestion() {
-    const index = Math.floor(Math.random() * this.suggestions.length);
-    //this.suggestions[index].suggestion += 1;
+    let index = Math.floor(Math.random() * this.suggestions.length);
+    while (index == this.currentBreakI) {
+      index = Math.floor(Math.random() * this.suggestions.length);
+    }
+    this.timesUsed[index].timesUsed += 1;
     this.currentBreak = this.suggestions[index].suggestion;
   }
-
+/*
+  getMinTimeUsed() {
+    this.currentBreakI = 0;
+    for (let i = 0; i < this.timesUsed.length; i++) {
+      if (this.timesUsed[i].timesUsed < this.timesUsed[this.currentBreakI].timesUsed) {
+        this.currentBreakI = i;
+      }
+    } 
+  }
+  */
   addSuggestion() {
     if (!(this.newSuggestion == '')) {
       this.suggestions.push({ suggestion: this.newSuggestion });
