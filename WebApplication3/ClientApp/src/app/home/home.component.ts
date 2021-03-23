@@ -9,31 +9,6 @@ import { PortalModule } from '@angular/cdk/portal';
 
 
 export class HomeComponent implements OnInit {
-
-  PomodoroMinutes: number = 0;
-  PomodoroSeconds: number = 0;
-  LongBreakMinutes: number = 0;
-  LongBreakSeconds: number = 0;
-  ShortBreakMinutes: number = 0;
-  ShortBreakSeconds: number = 0;
-
-secondsToString(value: number): string {
-  var date = new Date(0);
-  date.setSeconds(value);
-  var timeString = date.toISOString().substr(14, 5);
-  return timeString;
-  }
-
-
-  apps = {
-    todo: "todo",
-    break: "break", // Break suggestions
-    sounds: "sounds", // Calming sounds
-    breathe: "breathe" // Breathing exercises
-  }
-
-  currentApp = this.apps.todo;
-
   intervals = {
     pomodoro: 1500,
     shortBreak: 300,
@@ -44,6 +19,37 @@ secondsToString(value: number): string {
     shortBreak: 300,
     longBreak: 900,
   };
+
+  secondsToString(value: number): string {
+    var date = new Date(0);
+    date.setSeconds(value);
+    var timeString = date.toISOString().substr(14, 5);
+    return timeString;
+  }
+
+  secondsToDate(value: number): Date {
+    var date = new Date(0);
+    date.setSeconds(value);
+    return date;
+  }
+
+  PomodoroMinutes: number = this.secondsToDate(this.intervals.pomodoro).getMinutes();
+  PomodoroSeconds: number = this.secondsToDate(this.intervals.pomodoro).getSeconds();
+
+  ShortBreakMinutes: number = this.secondsToDate(this.intervals.shortBreak).getMinutes();
+  ShortBreakSeconds: number = this.secondsToDate(this.intervals.shortBreak).getSeconds();
+
+  LongBreakMinutes: number = this.secondsToDate(this.intervals.longBreak).getMinutes();
+  LongBreakSeconds: number = this.secondsToDate(this.intervals.longBreak).getSeconds();
+
+  apps = {
+    todo: "todo",
+    break: "break", // Break suggestions
+    sounds: "sounds", // Calming sounds
+    breathe: "breathe" // Breathing exercises
+  }
+
+  currentApp = this.apps.todo;
 
   pomodoroTimer = {
     
