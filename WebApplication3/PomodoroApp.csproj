@@ -30,6 +30,8 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\break\break.component.ts" />
     <None Remove="ClientApp\src\app\breathe\breathe.component.ts" />
+    <None Remove="ClientApp\src\app\feedback\feedback.component.css" />
+    <None Remove="ClientApp\src\app\feedback\feedback.component.spec.ts" />
     <None Remove="ClientApp\src\app\login\login.component.ts" />
     <None Remove="ClientApp\src\app\models\Break.ts" />
     <None Remove="ClientApp\src\app\models\toDo.ts" />

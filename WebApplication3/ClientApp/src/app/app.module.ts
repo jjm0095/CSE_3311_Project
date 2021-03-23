@@ -24,6 +24,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { BreakComponent } from './break/break.component'
 import { BreatheComponent } from './breathe/breathe.component';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { FeedbackComponent } from './feedback/feedback.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
     ToDoComponent,
     BreakComponent,
     BreatheComponent,
+    FeedbackComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -49,6 +51,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
       { path: 'todo', component: ToDoComponent },
       { path: 'break', component: BreakComponent },
       { path: 'breathe', component: BreatheComponent },
+      { path: 'feedback', component: FeedbackComponent}
     ]),
     BrowserAnimationsModule,
     MatTabsModule,
