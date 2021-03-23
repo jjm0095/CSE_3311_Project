@@ -65,7 +65,7 @@ export class ToDoComponent {
   }
 
   openUndoBar() {
-    let undoBarRef = this._undoBar.open("Task completed", "Undo", { duration: 10000, });
+    let undoBarRef = this._undoBar.open("Task removed", "Undo", { duration: 10000, });
 
     undoBarRef.onAction().subscribe(() => {
       this._undoBar.dismiss();
@@ -75,7 +75,7 @@ export class ToDoComponent {
     });
   }
   openUndoBarCompCheck() {
-    let undoBarRef = this._undoBar.open("Task completed", "Undo", { duration: 10000, });
+    let undoBarRef = this._undoBar.open("Task added", "Undo", { duration: 10000, });
 
     undoBarRef.onAction().subscribe(() => {
       this._undoBar.dismiss();

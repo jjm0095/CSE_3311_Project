@@ -122,6 +122,13 @@ export class HomeComponent implements OnInit {
     return value ? "Start" : "Pause";
   }
 
+  playAlert() {
+    let audio = new Audio();
+    audio.src = "../../../assets/audio/alert.mp3";
+    audio.load();
+    audio.play();
+  }
+
   onPomodoroButton() {
     // Reset the timer if time has reached 0
     if (!this.pomodoroTimer.timeSeconds) {
@@ -150,6 +157,7 @@ export class HomeComponent implements OnInit {
   loopPomodoro() {
     this.pomodoroTimer.timerId = setInterval(() => {
       if (0 >= this.pomodoroTimer.timeSeconds) {
+        this.playAlert();
         if (this.pomodoroTimer.timerId) {
           clearInterval(this.pomodoroTimer.timerId);
           this.pomodoroTimer.timerId = null;
@@ -191,6 +199,7 @@ export class HomeComponent implements OnInit {
   loopShortBreak() {
     this.shortBreakTimer.timerId = setInterval(() => {
       if (0 >= this.shortBreakTimer.timeSeconds) {
+        this.playAlert();
         if (this.shortBreakTimer.timerId) {
           clearInterval(this.shortBreakTimer.timerId);
           this.shortBreakTimer.timerId = null;
@@ -232,6 +241,7 @@ export class HomeComponent implements OnInit {
   loopLongBreak() {
     this.longBreakTimer.timerId = setInterval(() => {
       if (0 >= this.longBreakTimer.timeSeconds) {
+        this.playAlert();
         if (this.longBreakTimer.timerId) {
           clearInterval(this.longBreakTimer.timerId);
           this.longBreakTimer.timerId = null;

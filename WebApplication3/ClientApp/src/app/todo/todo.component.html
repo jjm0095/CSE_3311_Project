@@ -19,12 +19,25 @@
         <mat-list class="list">
           <!-- grabs all objects from array in ts file -->
           <mat-list-item class="list-element" *ngFor="let task of tasks; let index = index;">
-            <!-- button to delete-->
-            <mat-checkbox class="mr-3 mt-1" color="primary" (change)="completeTask(index)" [checked]="task.selected" (mouseover)="onTaskHover(index)" (mouseout)="onTaskLeave(index)"></mat-checkbox>
-            <mat-checkbox class="mr-3 mt-1" color="primary" (change)="deleteTask(index)" [checked]="task.deleteSelected" (mouseover)="onDeleteHover(index)" (mouseout)="onDeleteLeave(index)"></mat-checkbox>
-            <!-- string in ts array -->
-            <div class="content">{{task.content}}</div>
-            <mat-divider></mat-divider>
+            <div class="d-flex">
+              <!-- button to delete-->
+              <div class="p-2">
+                <mat-checkbox class="mt-1" color="primary" (change)="completeTask(index)" [checked]="task.selected" (mouseover)="onTaskHover(index)" (mouseout)="onTaskLeave(index)"></mat-checkbox>
+              </div>
+              <div class="p-2">
+                <!-- string in ts array -->
+                {{task.content}}
+              </div>
+              <div class="ml-auto p-2">
+                <button type="button" class="close" aria-label="Delete Task" (click)="deleteTask(index)">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <mat-divider></mat-divider>
+              <!--<mat-checkbox class="mr-3 mt-1" color="primary" (change)="deleteTask(index)" [checked]="task.deleteSelected" (mouseover)="onDeleteHover(index)" (mouseout)="onDeleteLeave(index)"></mat-checkbox>-->
+            </div>
+           
+
           </mat-list-item>
         </mat-list>
       </mat-card-content>

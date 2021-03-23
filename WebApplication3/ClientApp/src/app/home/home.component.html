@@ -12,13 +12,13 @@
       <mat-tab label="Short Break">
         <h1 class="m-4" style="text-align: center; font-size: 120px;">{{shortBreakTimer.timeString}}</h1>
         <div class="d-flex justify-content-center">
-          <button mat-raised-button color="primary" class="btn btn-primary btn-lg mx-3" (click)="onShortBreakButton()()">{{shortBreakTimer.buttonText}}</button>
+          <button mat-raised-button color="primary" class="btn btn-primary btn-lg mx-3" (click)="onShortBreakButton()">{{shortBreakTimer.buttonText}}</button>
         </div>
       </mat-tab>
       <mat-tab label="Long Break">
         <h1 class="m-4" style="text-align: center; font-size: 120px;">{{longBreakTimer.timeString}}</h1>
         <div class="d-flex justify-content-center">
-          <button mat-raised-button color="primary" class="btn btn-primary btn-lg mx-3" (click)="onLongBreakButton()()">{{longBreakTimer.buttonText}}</button>
+          <button mat-raised-button color="primary" class="btn btn-primary btn-lg mx-3" (click)="onLongBreakButton()">{{longBreakTimer.buttonText}}</button>
         </div>
       </mat-tab>
       
@@ -74,7 +74,7 @@
   <div class="card-body justify-content-center">
     <mat-card-content>
       <div class="row">
-        <div class="col-sm ml-3">
+        <div class="col-sm-2">
           <button class="mt-4" mat-fab style="background-color:rgb(222,120,50)" aria-label="To-Do List" (click)="changeApp(apps.todo)">
             <mat-icon>list</mat-icon>
           </button>
@@ -88,7 +88,7 @@
             <mat-icon>self_improvement</mat-icon>
           </button>
         </div>
-        <div class="col-lg">
+        <div class="col-lg-10">
           <app-todo *ngIf="currentApp == apps.todo"></app-todo>
           <app-break *ngIf="currentApp == apps.break"></app-break>
           <div *ngIf="currentApp == apps.sounds" class="card"></div>
