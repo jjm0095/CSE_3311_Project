@@ -25,7 +25,7 @@ import { BreakComponent } from './break/break.component'
 import { BreatheComponent } from './breathe/breathe.component';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { FeedbackComponent } from './feedback/feedback.component';
-
+//Import for all app components including angular components
 @NgModule({
   declarations: [
     AppComponent,

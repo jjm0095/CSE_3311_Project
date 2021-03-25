@@ -12,47 +12,52 @@
     <button class="add mx-3" (click)="addTask()" mat-raised-button>+</button>
   </form>
 </mat-card>
-  <mat-card class="todo-list-card m-3 scrollbar scrollbar-primary">
-    <mat-card-content>
-      <mat-card-content class="tasks" [style.overflow]="'auto'" [style.height.px]="'300'">
-        <!-- list of tasks -->
-        <mat-list class="list">
-          <!-- grabs all objects from array in ts file -->
-          <mat-list-item class="list-element" *ngFor="let task of tasks; let index = index;">
-            <div class="d-flex">
-              <!-- button to delete-->
-              <div class="p-2">
-                <mat-checkbox class="mt-1" color="primary" (change)="completeTask(index)" [checked]="task.selected" (mouseover)="onTaskHover(index)" (mouseout)="onTaskLeave(index)"></mat-checkbox>
-              </div>
-              <div class="p-2">
-                <!-- string in ts array -->
-                {{task.content}}
-              </div>
-              <div class="ml-auto p-2">
-                <button type="button" class="close" aria-label="Delete Task" (click)="deleteTask(index)">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <mat-divider></mat-divider>
-              <!--<mat-checkbox class="mr-3 mt-1" color="primary" (change)="deleteTask(index)" [checked]="task.deleteSelected" (mouseover)="onDeleteHover(index)" (mouseout)="onDeleteLeave(index)"></mat-checkbox>-->
+<mat-card class="todo-list-card m-3 scrollbar scrollbar-primary">
+  <mat-card-content>
+    <mat-card-content class="tasks" [style.overflow]="'auto'" [style.height.px]="'300'">
+      <!-- list of tasks -->
+      <mat-list class="list">
+        <!-- grabs all objects from array in ts file -->
+        <mat-list-item class="list-element" *ngFor="let task of tasks; let index = index;">
+          <div class="d-flex">
+            <!-- button to delete-->
+            <div class="p-2">
+              <mat-checkbox class="mt-1" color="primary" (change)="completeTask(index)" [checked]="task.selected" (mouseover)="onTaskHover(index)" (mouseout)="onTaskLeave(index)"></mat-checkbox>
             </div>
-           
+            <div class="p-2">
+              <!-- string in ts array -->
+              {{task.content}}
+            </div>
+            <div class="ml-auto p-2">
+              <!--delets task from list-->
+              <button type="button" class="close" aria-label="Delete Task" (click)="deleteTask(index)">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <mat-divider></mat-divider>
+            <!--<mat-checkbox class="mr-3 mt-1" color="primary" (change)="deleteTask(index)" [checked]="task.deleteSelected" (mouseover)="onDeleteHover(index)" (mouseout)="onDeleteLeave(index)"></mat-checkbox>-->
+          </div>
 
-          </mat-list-item>
-        </mat-list>
-      </mat-card-content>
-    </mat-card-content>
-  </mat-card>
-  <mat-card class="completed-list-card m-3 scrollbar scrollbar-primary">
-    <mat-card-subtitle>Completed Tasks</mat-card-subtitle>
-    <mat-card-content class="completed" [style.overflow]="'auto'" [style.height.px]="'300'">
-      <mat-list class="completed-list">
-        <mat-list-item class="completed-element" *ngFor="let completed of completedTasks; let index = index;">
-          <mat-checkbox class="mr-3 mt-1" color="primary" (change)="deleteCompleted(index)" [checked]="completed.selected" (mouseover)="onCompletedHover(index)" (mouseout)="onCompletedLeave(index)"></mat-checkbox>
-          <div class="content-completed">{{completed.content}}</div>
-          <mat-divider></mat-divider>
+
         </mat-list-item>
       </mat-list>
     </mat-card-content>
-  </mat-card>
-  
+  </mat-card-content>
+</mat-card>
+<!--Completed tasks list-->
+<mat-card class="completed-list-card m-3 scrollbar scrollbar-primary">
+  <mat-card-subtitle>Completed Tasks</mat-card-subtitle>
+  <mat-card-content class="completed" [style.overflow]="'auto'" [style.height.px]="'300'">
+    <mat-list class="completed-list">
+      <!--Pulls info froim completed array in ts file-->
+      <mat-list-item class="completed-element" *ngFor="let completed of completedTasks; let index = index;">
+        <!--button for removing task from completed list-->
+        <mat-checkbox class="mr-3 mt-1" color="primary" (change)="deleteCompleted(index)" [checked]="completed.selected" (mouseover)="onCompletedHover(index)" (mouseout)="onCompletedLeave(index)"></mat-checkbox>
+        <!--displays content for task in lis-->
+        <div class="content-completed">{{completed.content}}</div>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>
+

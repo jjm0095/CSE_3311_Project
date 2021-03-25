@@ -5,7 +5,7 @@ import { PortalModule } from '@angular/cdk/portal';
   selector: 'app-breathe',
   templateUrl: './breathe.component.html',
 })
-
+//breathing component gif
 export class BreatheComponent {
   
 }
