@@ -11,13 +11,9 @@ import { DataService } from './../data.service';
 
 
 export class HomeComponent implements OnInit {
-  /*
+  
   constructor(private data: DataService) { }
-  currUser: User;
-  ngOnInit() {
-    this.data.currUser.subscribe(currUser => this.currUser = currUser);
-  }
-  */
+  user: User;
   intervals = {
     pomodoro: 1500,
     shortBreak: 300,
@@ -28,6 +24,14 @@ export class HomeComponent implements OnInit {
     shortBreak: 300,
     longBreak: 900,
   };
+  ngOnInit(): void {
+    this.data.userMessage.subscribe(message => this.user = message);
+    if (this.user.signedIn == true) {
+      this.userConfigTimers()
+    }
+  }
+  
+  
 
   secondsToString(value: number): string {
     var date = new Date(0);
@@ -263,8 +267,16 @@ export class HomeComponent implements OnInit {
     this.pomodoroTimer.timeSeconds = this.intervals.pomodoro;
     this.pomodoroTimer.timeString = this.secondsToString(this.intervals.pomodoro)
     this.starts.pomodoro = this.PomodoroMinutes * 60 + this.PomodoroSeconds
+    if (this.user.signedIn) {
+      this.user.pomoTime = this.starts.pomodoro
+      this.data.UpdateMessage(this.user);
+    }
     this.pomodoroTimer.startTimeSeconds = this.starts.pomodoro;
     this.pomodoroTimer.startTimeString = this.secondsToString(this.starts.pomodoro)
+    if (this.user.signedIn) {
+      this.user.pomoTime = this.starts.pomodoro
+      this.data.UpdateMessage(this.user);
+    }
   }
 
   onSaveShortTimerConfig() {
@@ -272,8 +284,16 @@ export class HomeComponent implements OnInit {
     this.shortBreakTimer.timeSeconds = this.intervals.shortBreak;
     this.shortBreakTimer.timeString = this.secondsToString(this.intervals.shortBreak)
     this.starts.shortBreak = this.ShortBreakMinutes * 60 + this.ShortBreakSeconds
+    if (this.user.signedIn) {
+      this.user.shortTime = this.starts.shortBreak
+      this.data.UpdateMessage(this.user);
+    }
     this.shortBreakTimer.startTimeSeconds = this.starts.shortBreak;
     this.shortBreakTimer.startTimeString = this.secondsToString(this.starts.shortBreak)
+    if (this.user.signedIn) {
+      this.user.shortTime = this.starts.shortBreak
+      this.data.UpdateMessage(this.user);
+    }
   }
 
   onSaveLongTimerConfig() {
@@ -281,6 +301,50 @@ export class HomeComponent implements OnInit {
     this.longBreakTimer.timeSeconds = this.intervals.longBreak;
     this.longBreakTimer.timeString = this.secondsToString(this.intervals.longBreak)
     this.starts.longBreak = this.LongBreakMinutes * 60 + this.LongBreakSeconds
+    if (this.user.signedIn) {
+      this.user.longTime = this.starts.longBreak
+      this.data.UpdateMessage(this.user);
+    }
+    this.longBreakTimer.startTimeSeconds = this.starts.longBreak;
+    this.longBreakTimer.startTimeString = this.secondsToString(this.starts.longBreak)
+    if (this.user.signedIn) {
+      this.user.longTime = this.starts.longBreak
+      this.data.UpdateMessage(this.user);
+    }
+  }
+
+  userConfigTimers() {
+    //config pomodoro timer whena user is logged in
+    this.intervals.pomodoro = this.user.pomoTime
+    this.pomodoroTimer.timeSeconds = this.intervals.pomodoro;
+    this.pomodoroTimer.timeString = this.secondsToString(this.intervals.pomodoro)
+    this.starts.pomodoro = this.PomodoroMinutes * 60 + this.PomodoroSeconds
+    if (this.user.signedIn) {
+      this.user.pomoTime = this.starts.pomodoro
+      this.data.UpdateMessage(this.user);
+    }
+    this.pomodoroTimer.startTimeSeconds = this.starts.pomodoro;
+    this.pomodoroTimer.startTimeString = this.secondsToString(this.starts.pomodoro)
+    //config short break timer when user is logged in
+    this.intervals.shortBreak = this.user.shortTime
+    this.shortBreakTimer.timeSeconds = this.intervals.shortBreak;
+    this.shortBreakTimer.timeString = this.secondsToString(this.intervals.shortBreak)
+    this.starts.shortBreak = this.ShortBreakMinutes * 60 + this.ShortBreakSeconds
+    if (this.user.signedIn) {
+      this.user.shortTime = this.starts.shortBreak
+      this.data.UpdateMessage(this.user);
+    }
+    this.shortBreakTimer.startTimeSeconds = this.starts.shortBreak;
+    this.shortBreakTimer.startTimeString = this.secondsToString(this.starts.shortBreak)
+    // config long break time when user is logged in
+    this.intervals.longBreak = this.user.longTime
+    this.longBreakTimer.timeSeconds = this.intervals.longBreak;
+    this.longBreakTimer.timeString = this.secondsToString(this.intervals.longBreak)
+    this.starts.longBreak = this.LongBreakMinutes * 60 + this.LongBreakSeconds
+    if (this.user.signedIn) {
+      this.user.longTime = this.starts.longBreak
+      this.data.UpdateMessage(this.user);
+    }
     this.longBreakTimer.startTimeSeconds = this.starts.longBreak;
     this.longBreakTimer.startTimeString = this.secondsToString(this.starts.longBreak)
   }

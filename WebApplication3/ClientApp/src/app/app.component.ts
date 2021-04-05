@@ -11,7 +11,7 @@ export class AppComponent {
   ngOnInit(): void {
     
     this.currUser.email = "";
-    this.currUser.isdefault = true;
+    this.currUser.signedIn = false;
     this.currUser.password_ = "";
     this.currUser.userName = "";
 

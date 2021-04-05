@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { toDo } from './../models/toDo';
 import { MatCheckboxChange, MatSnackBar } from '@angular/material';
+import { User } from './../models/User';
+import { DataService } from './../data.service';
 
 @Component({
   selector: 'app-todo',
@@ -8,7 +10,9 @@ import { MatCheckboxChange, MatSnackBar } from '@angular/material';
   styleUrls: ['./todo.component.css'],
 })
 export class ToDoComponent {
-  constructor(private _undoBar: MatSnackBar) { }
+  constructor(private data: DataService,private _undoBar: MatSnackBar) { }
+  user: User;
+  
   //arrays for tasks to be displayed in list
   tasks: toDo[] = [];
   //array for removed tasks, to be used in undo function
@@ -20,40 +24,62 @@ export class ToDoComponent {
   inputTask: string = '';
   /* test cases for to do list */
   ngOnInit(): void {
+    this.data.userMessage.subscribe(message => this.user = message);
     //default initial values for test cases in task list
-    this.tasks = [
-      {
-        content: 'test 1',
-        selected: false,
-        deleteSelected: false
-      },
-      {
-        content: 'test 2',
-        selected: false,
-        deleteSelected: false
+    if (this.user.signedIn == false) {
+      this.tasks = [
+        {
+          content: 'test 1',
+          selected: false,
+          deleteSelected: false
+        },
+        {
+          content: 'test 2',
+          selected: false,
+          deleteSelected: false
+        }
+      ]
+      //default values for completed task list 
+      this.completedTasks = [
+        {
+          content: 'Test: you have completed this task',
+          selected: false,
+          deleteSelected: false
+        }
+      ]
+    } else {
+      for (let i = 0; i < this.user.tasks.length; i++) {
+        this.tasks.push({ content: this.user.tasks[i], selected: false, deleteSelected: false });
       }
-    ]
-    //default values for completed task list 
-    this.completedTasks = [
-      {
-        content: 'Test: you have completed this task',
-        selected: false,
-        deleteSelected: false
+      for (let i = 0; i < this.user.completed.length; i++) {
+        this.completedTasks.push({ content: this.user.completed[i], selected: false, deleteSelected: false });
       }
-    ]
+    }
+    
   }
 /*  complete element in the list based on the index */
   //pushes it to removed array
   completeTask(index: number) {
     this.tasks[index].selected = false;
+    //repeats the process for the user object if a user is signed in
+    if (this.user.signedIn) {
+      this.user.completed.push(this.tasks[index].content)
+      this.user.tasks.splice(index, 1)
+    }
     this.removedTasks.push(this.tasks[index]);
     this.completedTasks.push(this.tasks[index]);
     this.tasks.splice(index, 1);
+    this.data.UpdateMessage(this.user);
     this.openUndoBarCompCheck();
   }
   // deletes tasks from list and pushes to removed array
   deleteTask(index: number) {
     this.tasks[index].selected = false;
+    //repeats the process for the user object if a user is signed in
+    if (this.user.signedIn) {
+      this.user.tasks.splice(index, 1);
+      this.data.UpdateMessage(this.user);
+    }
     this.removedTasks.push(this.tasks[index]);
     this.tasks.splice(index, 1);
     //pop up button at bottom of screen for undo
@@ -61,6 +87,11 @@ export class ToDoComponent {
   }
   deleteCompleted(index: number) {
     this.completedTasks[index].selected = false;
+    //repeats the process for the user object if a user is signed in
+    if (this.user.signedIn) {
+      this.user.completed.splice(index, 1);
+      this.data.UpdateMessage(this.user);
+    }
     this.removedCompleted.push(this.completedTasks[index]);
     this.completedTasks.splice(index, 1);
     //pop up button at bottom of screen for undo
@@ -70,41 +101,78 @@ export class ToDoComponent {
   addTask() {
     if (!(this.inputTask == '')) {
       this.tasks.push({ content: this.inputTask, selected: false, deleteSelected: false });
+      //repeats the process for the user object if a user is signed in
+      if (this.user.signedIn) {
+        this.user.tasks.push(this.inputTask)
+        this.data.UpdateMessage(this.user);
+      }
       this.inputTask = '';
     }
   }
   //undo button pops up when remove button is pressed to undo
+  removed: string = '';
   openUndoBar() {
     let undoBarRef = this._undoBar.open("Task removed", "Undo", { duration: 10000, });
     //code for Undo button
     undoBarRef.onAction().subscribe(() => {
       this._undoBar.dismiss();
+      this.removed = this.removedTasks.pop().content;
+      this.tasks.push({ content: this.removed, selected: false, deleteSelected: false })
+      /*
       this.tasks.push(this.removedTasks.pop());
+      */
+      //repeats the process for the user object if a user is signed in
+      if (this.user.signedIn) {
+        this.user.tasks.push(this.removed)
+        this.data.UpdateMessage(this.user);
+      }
+      this.removed = '';
       //this.removedCompleted.push(this.completedTasks.pop());
       this._undoBar.open("Action undone", null, { duration: 5000 });
     });
   }
   //undo button pops up when remove button is pressed to undo
   openUndoBarCompCheck() {
-    let undoBarRef = this._undoBar.open("Task added", "Undo", { duration: 10000, });
+    let undoBarRef = this._undoBar.open("Task Completed", "Undo", { duration: 10000, });
     //code for undo button
     undoBarRef.onAction().subscribe(() => {
       this._undoBar.dismiss();
-      this.tasks.push(this.removedTasks.pop());
+      this.removed = this.removedTasks.pop().content;
+      if (this.user.signedIn) {
+        this.user.tasks.push(this.removed)
+        this.user.completed.pop()
+        this.data.UpdateMessage(this.user);
+      }
+      this.tasks.push({ content: this.removed, selected: false, deleteSelected: false });
       this.removedCompleted.push(this.completedTasks.pop());
+      this.removed = '';
       this._undoBar.open("Action undone", null, { duration: 5000 });
     });
   }
   //undo button pops up when completed button is pressed in list
   openUndoBarCompleted() {
-    let undoBarRef = this._undoBar.open("Task completed", "Undo", { duration: 10000, });
+    let undoBarRef = this._undoBar.open("Task Removed", "Undo", { duration: 10000, });
     //code for undo button
     undoBarRef.onAction().subscribe(() => {
+      this.removed = this.removedCompleted.pop().content
       this._undoBar.dismiss();
-      this.completedTasks.push(this.removedCompleted.pop());
+      if (this.user.signedIn) {
+        this.user.completed.push(this.removed)
+        this.data.UpdateMessage(this.user);
+      }
+      this.completedTasks.push({ content: this.removed, selected: false, deleteSelected: false });
       this._undoBar.open("Action undone", null, { duration: 5000 });
     });
   }
+
+  updateUserTodo() {
+    
+  }
+
+  updateUserCompleted() {
+
+  }
+
   // functions for chnaging look of button when moused over
   onTaskHover(index: number) {
     this.tasks[index].selected = true;

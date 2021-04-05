@@ -2,7 +2,11 @@ export class User {
 
   email: string;
   userName: string;
-  isdefault: true;
+  signedIn: boolean;
   password_: string;
-
+  tasks: string[];
+  completed: string[];
+  pomoTime: number;
+  shortTime: number;
+  longTime: number;
 }

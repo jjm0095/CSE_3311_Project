@@ -8,15 +8,21 @@ import { User } from './models/User';
 export class DataService {
 
   message: User = {
-    email : "default email",
-    userName : "Default Username",
-    isdefault : true,
-    password_ : "Default Password",
+    email : "test.user@email.com",
+    userName : "Test Username",
+    signedIn : false,
+    password_: "Test Password",
+    tasks: ["signed in test task 1", "signed in test task 2"],
+    completed: ["signed in completed test task"],
+    pomoTime: 1800,
+    shortTime: 600,
+    longTime: 1200,
+
+    
   };
   private messageSource = new BehaviorSubject<User>(this.message);
   userMessage = this.messageSource.asObservable();
 
-  //user$: Observable<User> = this.messageUser.asObservable();
 
   UpdateMessage(message: User) {
     this.messageSource.next(message);
