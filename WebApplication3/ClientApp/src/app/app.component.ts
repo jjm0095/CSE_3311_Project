@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { User } from './models/User';
 
 @Component({
   selector: 'app-root',
@@ -6,4 +7,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'MyPomodoro';
+  currUser: User;
+  ngOnInit(): void {
+    
+    this.currUser.email = "";
+    this.currUser.isdefault = true;
+    this.currUser.password_ = "";
+    this.currUser.userName = "";
+
+  }
 }

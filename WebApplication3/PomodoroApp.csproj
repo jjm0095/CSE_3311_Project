@@ -30,11 +30,14 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\break\break.component.ts" />
     <None Remove="ClientApp\src\app\breathe\breathe.component.ts" />
+    <None Remove="ClientApp\src\app\data.service.ts" />
     <None Remove="ClientApp\src\app\feedback\feedback.component.css" />
     <None Remove="ClientApp\src\app\feedback\feedback.component.spec.ts" />
     <None Remove="ClientApp\src\app\login\login.component.ts" />
     <None Remove="ClientApp\src\app\models\Break.ts" />
     <None Remove="ClientApp\src\app\models\toDo.ts" />
+    <None Remove="ClientApp\src\app\models\User.ts" />
+    <None Remove="ClientApp\src\app\signup\signup.component.ts" />
     <None Remove="ClientApp\src\app\todo\todo.component.ts" />
     <None Remove="ClientApp\src\assets\.gitkeep" />
     <None Remove="ClientApp\src\assets\alert.mp3" />
@@ -54,9 +57,12 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\break\break.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\breathe\breathe.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\data.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\login\login.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\Break.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\User.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\toDo.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\signup\signup.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\todo\todo.component.ts" />
   </ItemGroup>
 

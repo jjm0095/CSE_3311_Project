@@ -9,6 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
@@ -37,7 +38,8 @@ import { FeedbackComponent } from './feedback/feedback.component';
     ToDoComponent,
     BreakComponent,
     BreatheComponent,
-    FeedbackComponent
+    FeedbackComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -51,7 +53,8 @@ import { FeedbackComponent } from './feedback/feedback.component';
       { path: 'todo', component: ToDoComponent },
       { path: 'break', component: BreakComponent },
       { path: 'breathe', component: BreatheComponent },
-      { path: 'feedback', component: FeedbackComponent}
+      { path: 'feedback', component: FeedbackComponent },
+      { path: 'signup', component: SignupComponent}
     ]),
     BrowserAnimationsModule,
     MatTabsModule,

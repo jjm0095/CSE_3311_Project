@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PortalModule } from '@angular/cdk/portal';
+import { User } from './../models/User';
+import { DataService } from './../data.service';
 
 
 @Component({
@@ -9,6 +11,13 @@ import { PortalModule } from '@angular/cdk/portal';
 
 
 export class HomeComponent implements OnInit {
+  /*
+  constructor(private data: DataService) { }
+  currUser: User;
+  ngOnInit() {
+    this.data.currUser.subscribe(currUser => this.currUser = currUser);
+  }
+  */
   intervals = {
     pomodoro: 1500,
     shortBreak: 300,
@@ -87,12 +96,6 @@ export class HomeComponent implements OnInit {
 
   timer: number = 90;
   pause: boolean = false;
-  constructor() { }
-
-  ngOnInit() {
-
-  }
-
  
 
   countdown() {
