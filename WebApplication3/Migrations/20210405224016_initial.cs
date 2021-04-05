@@ -163,7 +163,10 @@ namespace PomodoroApp.Migrations
                     IdentityId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Locale = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PomodoroDuration = table.Column<int>(type: "int", nullable: false),
+                    ShortBreakDuration = table.Column<int>(type: "int", nullable: false),
+                    LongBreakDuration = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -172,6 +175,28 @@ namespace PomodoroApp.Migrations
                         name: "FK_Members_AspNetUsers_IdentityId",
                         column: x => x.IdentityId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tasks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Completed = table.Column<bool>(type: "bit", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    MemberId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tasks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tasks_Members_MemberId",
+                        column: x => x.MemberId,
+                        principalTable: "Members",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -219,6 +244,11 @@ namespace PomodoroApp.Migrations
                 name: "IX_Members_IdentityId",
                 table: "Members",
                 column: "IdentityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tasks_MemberId",
+                table: "Tasks",
+                column: "MemberId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -239,10 +269,13 @@ namespace PomodoroApp.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Members");
+                name: "Tasks");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Members");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

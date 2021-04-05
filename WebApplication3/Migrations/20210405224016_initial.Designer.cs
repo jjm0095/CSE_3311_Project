@@ -10,7 +10,7 @@ using PomodoroApp.Data;
 namespace PomodoroApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210405165533_initial")]
+    [Migration("20210405224016_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -242,11 +242,46 @@ namespace PomodoroApp.Migrations
                     b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("LongBreakDuration")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PomodoroDuration")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ShortBreakDuration")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IdentityId");
 
                     b.ToTable("Members");
+                });
+
+            modelBuilder.Entity("PomodoroApp.Models.Entities.Task", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Completed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("MemberId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MemberId");
+
+                    b.ToTable("Tasks");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -307,6 +342,18 @@ namespace PomodoroApp.Migrations
                         .HasForeignKey("IdentityId");
 
                     b.Navigation("Identity");
+                });
+
+            modelBuilder.Entity("PomodoroApp.Models.Entities.Task", b =>
+                {
+                    b.HasOne("PomodoroApp.Models.Entities.Member", null)
+                        .WithMany("Tasks")
+                        .HasForeignKey("MemberId");
+                });
+
+            modelBuilder.Entity("PomodoroApp.Models.Entities.Member", b =>
+                {
+                    b.Navigation("Tasks");
                 });
 #pragma warning restore 612, 618
         }

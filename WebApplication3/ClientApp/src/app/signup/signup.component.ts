@@ -6,6 +6,9 @@ import { DataService } from './../data.service';
   templateUrl: './signup.component.html',
 })
 export class SignupComponent implements OnInit {
+  ngOnInit(): void {
+
+  }
 
   inputUName: string = "";
   inputEmail: string = "";

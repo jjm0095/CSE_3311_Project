@@ -17,5 +17,6 @@ namespace PomodoroApp.Data
         }
 
         public Microsoft.EntityFrameworkCore.DbSet<Member> Members { get; set; }
+        public Microsoft.EntityFrameworkCore.DbSet<Task> Tasks { get; set; }
     }
 }

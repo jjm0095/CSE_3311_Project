@@ -16,5 +16,11 @@ namespace PomodoroApp.Models.Entities
         public int PomodoroDuration { get; set; }
         public int ShortBreakDuration { get; set; }
         public int LongBreakDuration { get; set; }
+        public List<Task> Tasks { get; set; }
+
+        public Member()
+        {
+            this.Tasks = new List<Task>();
+        }
     }
 }
