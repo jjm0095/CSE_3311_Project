@@ -1,26 +1,38 @@
 <h1 class="m-3" style="text-align: center;">Login</h1>
-<div class="card" style="width: 40rem; margin: auto;">
+<div class="card" style="width: 30rem; margin: auto;">
 
-  <div class="form-group row d-flex justify-content-center">
-    <mat-form-field>
-      <mat-label>Username</mat-label>
-      <input type="text" name="inputUName" matInput [(ngModel)]="inputUName" />
-    </mat-form-field>
+  <div class="card-body m-2">
+    <div class="row" style="margin-left:3.5rem">
+      <div class="col-md-6">
+        <form #f="ngForm" novalidate (ngSubmit)="login(f)">
+          <div class="form-group login">
+            <mat-form-field appearance="outline">
+              <mat-label>Username</mat-label>
+              <input type="text" name="inputUName" matInput [(ngModel)]="inputUName" />
+            </mat-form-field>
+          </div>
+          <div class="form-group login">
+            <mat-form-field appearance="outline">
+              <mat-label>Password</mat-label>
+              <input name="password" matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="inputPassword">
+              <button matSuffix mat-icon-button (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="row d-flex m-3 justify-content-center">
+      <button mat-raised-button color="primary" style="min-height:3rem;" class="btn btn-primary btn-lg mx-3" (click)="onLogin()">Login</button>
+    </div>
+
   </div>
-  <div class="form-group row d-flex justify-content-center">
-    <mat-form-field>
-      <mat-label>Password</mat-label>
-      <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="inputPassword">
-      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-      </button>
-    </mat-form-field>
-  </div>
-  <button mat-raised-button color="primary" class="btn btn-primary btn-lg mx-3" (click)="onLogin()">Login</button>
-  <div class="m-3 justify-content-center">
-    Don't Have an account?
-    <a class="nav-link" href="#" routerLink="/signup">Sign-Up</a>
-  </div>
+</div>
+<div class="row m-3 justify-content-center">
+  Don't have an account?
+  <a class="ml-1" href="#" routerLink="/signup">Sign up.</a>
 </div>
 
 

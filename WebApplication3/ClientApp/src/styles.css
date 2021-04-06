@@ -17,5 +17,13 @@ code {
   border-color: #1861ac;
 }
 
+.login {
+    margin: -0.5rem!important;
+}
+
+.mat-form-field {
+  width:20rem;
+}
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
