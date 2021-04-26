@@ -3,18 +3,20 @@
   <!--title and button for card-->
   <mat-card-subtitle>Suggestions and Reminders</mat-card-subtitle>
   <!--button for pulling new suggestion from suggestions tab-->
-  <button mat-raised-button (click)="pickSuggestion()" style="margin: 8px">New Suggestion</button>
-  <mat-divider></mat-divider>
+  <div class="card-body d-flex justify-content-center">
+    <button mat-raised-button (click)="pickSuggestion()" style="margin: 8px">Display New Suggestion</button>
+  </div>
   <!--display for the current suggestion-->
-  <h1 class="m-4" style="font-size: 25px;">{{currentBreak}}</h1>
-  <mat-divider></mat-divider>
-  <mat-form-field class="tasks-input-field">
-    <mat-label>Add a Suggestion</mat-label>
-    <!--input field for user made suggestion-->
-    <input type="text" name="newSuggestion" matInput [(ngModel)]="newSuggestion" />
-  </mat-form-field>
-  <!--button for adding content from input field into suggestion pool-->
-  <button mat-raised-button (click)="addSuggestion()">Add</button>
-
-
+  <div class="card-body d-flex justify-content-center">
+    <h1 class="m-4" style="font-size: 25px;">{{currentBreak}}</h1>
+  </div>
+  <div class="card-body d-flex justify-content-center">
+    <mat-form-field class="tasks-input-field">
+      <mat-label>Add a Suggestion</mat-label>
+      <!--input field for user made suggestion-->
+      <input type="text" name="newSuggestion" matInput [(ngModel)]="newSuggestion" />
+    </mat-form-field>
+    <!--button for adding content from input field into suggestion pool-->
+    <button mat-raised-button (click)="addSuggestion()" style="margin: 8px">Add</button>
+    </div>
 </mat-card>
