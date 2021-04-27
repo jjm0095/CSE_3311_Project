@@ -28,6 +28,9 @@ namespace PomodoroApp.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PomodoroDuration = table.Column<int>(type: "int", nullable: false),
+                    ShortBreakDuration = table.Column<int>(type: "int", nullable: false),
+                    LongBreakDuration = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -160,13 +163,7 @@ namespace PomodoroApp.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IdentityId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Locale = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PomodoroDuration = table.Column<int>(type: "int", nullable: false),
-                    ShortBreakDuration = table.Column<int>(type: "int", nullable: false),
-                    LongBreakDuration = table.Column<int>(type: "int", nullable: false)
+                    IdentityId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -188,15 +185,15 @@ namespace PomodoroApp.Migrations
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Completed = table.Column<bool>(type: "bit", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    MemberId = table.Column<int>(type: "int", nullable: true)
+                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tasks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tasks_Members_MemberId",
-                        column: x => x.MemberId,
-                        principalTable: "Members",
+                        name: "FK_Tasks_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -246,9 +243,9 @@ namespace PomodoroApp.Migrations
                 column: "IdentityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tasks_MemberId",
+                name: "IX_Tasks_AppUserId",
                 table: "Tasks",
-                column: "MemberId");
+                column: "AppUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -269,13 +266,13 @@ namespace PomodoroApp.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Members");
+
+            migrationBuilder.DropTable(
                 name: "Tasks");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "Members");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

@@ -18,12 +18,14 @@ namespace PomodoroApp.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly IJwtFactory _jwtFactory;
         private readonly JwtIssuerOptions _jwtOptions;
+        private readonly Data.ApplicationDbContext _dbContext;
 
-        public AuthController(UserManager<AppUser> userManager, IJwtFactory jwtFactory, IOptions<JwtIssuerOptions> jwtOptions)
+        public AuthController(UserManager<AppUser> userManager, IJwtFactory jwtFactory, IOptions<JwtIssuerOptions> jwtOptions, Data.ApplicationDbContext dbContext)
         {
             _userManager = userManager;
             _jwtFactory = jwtFactory;
             _jwtOptions = jwtOptions.Value;
+            _dbContext = dbContext;
         }
 
         // POST api/auth/login
@@ -41,7 +43,9 @@ namespace PomodoroApp.Controllers
                 return BadRequest(Errors.AddErrorToModelState("login_failure", "Invalid username or password.", ModelState));
             }
 
-            var jwt = await Tokens.GenerateJwt(identity, _jwtFactory, credentials.UserName, _jwtOptions, new JsonSerializerSettings { Formatting = Formatting.Indented });
+            var user = await _userManager.FindByNameAsync(credentials.UserName);
+
+            var jwt = await Tokens.GenerateJwt(identity, _jwtFactory, credentials.UserName, user.PomodoroDuration, user.ShortBreakDuration, user.LongBreakDuration, _jwtOptions, new JsonSerializerSettings { Formatting = Formatting.Indented });
             return new OkObjectResult(jwt);
         }
 

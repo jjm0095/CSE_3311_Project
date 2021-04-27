@@ -26,6 +26,11 @@ import { BreakComponent } from './break/break.component'
 import { BreatheComponent } from './breathe/breathe.component';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { FeedbackComponent } from './feedback/feedback.component';
+import { UserService } from './shared/services/user.service';
+import { BaseService } from './shared/services/base.service';
+import { config } from 'process';
+import { ConfigService } from './shared/utils/config.service';
+import { LogoutComponent } from './logout/logout.component';
 //Import for all app components including angular components
 @NgModule({
   declarations: [
@@ -35,6 +40,7 @@ import { FeedbackComponent } from './feedback/feedback.component';
     CounterComponent,
     FetchDataComponent,
     LoginComponent,
+    LogoutComponent,
     ToDoComponent,
     BreakComponent,
     BreatheComponent,
@@ -50,6 +56,7 @@ import { FeedbackComponent } from './feedback/feedback.component';
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'login', component: LoginComponent },
+      { path: 'logout', component: LogoutComponent },
       { path: 'todo', component: ToDoComponent },
       { path: 'break', component: BreakComponent },
       { path: 'breathe', component: BreatheComponent },
@@ -71,7 +78,7 @@ import { FeedbackComponent } from './feedback/feedback.component';
     MatSnackBarModule,
     MatSidenavModule
   ],
-  providers: [],
+  providers: [ UserService, ConfigService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

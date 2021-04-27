@@ -6,7 +6,7 @@ export abstract class BaseService {
 
   protected handleError(error: any) {
     var applicationError = error.headers.get('Application-Error');
-
+    console.log(error);
     // either applicationError in header or model error in body
     if (applicationError) {
       return Observable.throw(applicationError);

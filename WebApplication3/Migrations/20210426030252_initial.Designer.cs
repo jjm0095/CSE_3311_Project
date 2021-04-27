@@ -10,7 +10,7 @@ using PomodoroApp.Data;
 namespace PomodoroApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210405224016_initial")]
+    [Migration("20210426030252_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,7 +18,7 @@ namespace PomodoroApp.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.4")
+                .HasAnnotation("ProductVersion", "5.0.5")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -183,6 +183,9 @@ namespace PomodoroApp.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<int>("LongBreakDuration")
+                        .HasColumnType("int");
+
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -200,8 +203,14 @@ namespace PomodoroApp.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<int>("PomodoroDuration")
+                        .HasColumnType("int");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ShortBreakDuration")
+                        .HasColumnType("int");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
@@ -230,26 +239,8 @@ namespace PomodoroApp.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Gender")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("IdentityId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Locale")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Location")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("LongBreakDuration")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PomodoroDuration")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ShortBreakDuration")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -265,6 +256,9 @@ namespace PomodoroApp.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<bool>("Completed")
                         .HasColumnType("bit");
 
@@ -274,12 +268,9 @@ namespace PomodoroApp.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("MemberId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("MemberId");
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("Tasks");
                 });
@@ -346,12 +337,12 @@ namespace PomodoroApp.Migrations
 
             modelBuilder.Entity("PomodoroApp.Models.Entities.Task", b =>
                 {
-                    b.HasOne("PomodoroApp.Models.Entities.Member", null)
+                    b.HasOne("PomodoroApp.Models.Entities.AppUser", null)
                         .WithMany("Tasks")
-                        .HasForeignKey("MemberId");
+                        .HasForeignKey("AppUserId");
                 });
 
-            modelBuilder.Entity("PomodoroApp.Models.Entities.Member", b =>
+            modelBuilder.Entity("PomodoroApp.Models.Entities.AppUser", b =>
                 {
                     b.Navigation("Tasks");
                 });

@@ -38,10 +38,33 @@ namespace PomodoroApp.Controllers
 
             if (!result.Succeeded) return new BadRequestObjectResult(Errors.AddErrorsToModelState(result, ModelState));
 
-            await _appDbContext.Members.AddAsync(new Member { IdentityId = userIdentity.Id, Location = model.Location });
+            await _appDbContext.Members.AddAsync(new Member { IdentityId = userIdentity.Id});
             await _appDbContext.SaveChangesAsync();
 
-            return new OkResult();
+            return Ok();
+        }
+
+        //POST api/accounts/timer
+        [HttpPost("timer")]
+        public async Task<IActionResult> UpdateTimer([FromBody] TimerUpdateViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var userEntity = await _userManager.FindByIdAsync(model.UserId);  //await this._appDbContext.Users.FindAsync(model.UserId);
+
+            if (model.Timer == "pomodoro")
+                userEntity.PomodoroDuration = model.Interval;
+            else if (model.Timer == "shortBreak")
+                userEntity.ShortBreakDuration = model.Interval;
+            else if (model.Timer == "longBreak")
+                userEntity.LongBreakDuration = model.Interval;
+
+            await _appDbContext.SaveChangesAsync();
+
+            return Ok();
         }
     }
 }

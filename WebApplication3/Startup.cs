@@ -21,6 +21,8 @@ using System.Text;
 using System;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using PomodoroApp.Auth;
+using PomodoroApp;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace WebApplication3
 {
@@ -39,26 +41,19 @@ namespace WebApplication3
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-            // In production, the Angular files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/dist";
-            });
-
-            // Add framework services
+            // Add framework services.
             services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
-            b => b.MigrationsAssembly("PomodoroApp")));
-
-            services.TryAddTransient<IHttpContextAccessor, HttpContextAccessor>();
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+                    b => b.MigrationsAssembly("PomodoroApp")));
 
             services.AddSingleton<IJwtFactory, JwtFactory>();
 
+            services.TryAddTransient<IHttpContextAccessor, HttpContextAccessor>();
+
+            // jwt wire up
             // Get options from app settings
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
 
-            // jwt wire up
             // Configure JwtIssuerOptions
             services.Configure<JwtIssuerOptions>(options =>
             {
@@ -87,6 +82,7 @@ namespace WebApplication3
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
             }).AddJwtBearer(configureOptions =>
             {
                 configureOptions.ClaimsIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
@@ -115,6 +111,89 @@ namespace WebApplication3
 
             services.AddAutoMapper(typeof(Startup));
             services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
+            //services.AddControllersWithViews();
+            //// In production, the Angular files will be served from this directory
+            //services.AddSpaStaticFiles(configuration =>
+            //{
+            //    configuration.RootPath = "ClientApp/dist";
+            //});
+
+            //// Add framework services
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+            //b => b.MigrationsAssembly("PomodoroApp")));
+
+            //services.TryAddTransient<IHttpContextAccessor, HttpContextAccessor>();
+
+            //services.AddSingleton<IJwtFactory, JwtFactory>();
+
+            //// Get options from app settings
+            //var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
+
+            //// jwt wire up
+            //// Configure JwtIssuerOptions
+            //services.Configure<JwtIssuerOptions>(options =>
+            //{
+            //    options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
+            //    options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
+            //    options.SigningCredentials = new SigningCredentials(_signingKey, SecurityAlgorithms.HmacSha256);
+            //});
+
+            //var tokenValidationParameters = new TokenValidationParameters
+            //{
+            //    ValidateIssuer = true,
+            //    ValidIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)],
+
+            //    ValidateAudience = true,
+            //    ValidAudience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)],
+
+            //    ValidateIssuerSigningKey = true,
+            //    IssuerSigningKey = _signingKey,
+
+            //    RequireExpirationTime = false,
+            //    ValidateLifetime = true,
+            //    ClockSkew = TimeSpan.Zero
+            //};
+
+            //services.AddAuthentication(options =>
+            //{
+            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //}).AddJwtBearer(configureOptions =>
+            //{
+            //    configureOptions.ClaimsIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
+            //    configureOptions.TokenValidationParameters = tokenValidationParameters;
+            //    configureOptions.SaveToken = true;
+            //});
+
+            //// api user claim policy
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("ApiUser", policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Rol, Constants.Strings.JwtClaims.ApiAccess));
+            //});
+
+            //services.AddControllersWithViews();
+
+            //// add identity
+            //var builder = services.AddIdentityCore<AppUser>(o =>
+            //{
+            //    // configure identity options
+            //    o.Password.RequireDigit = false;
+            //    o.Password.RequireLowercase = false;
+            //    o.Password.RequireUppercase = false;
+            //    o.Password.RequireNonAlphanumeric = false;
+            //    o.Password.RequiredLength = 6;
+            //});
+            //builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), builder.Services);
+            //builder.AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+
+            //services.AddCors(options => options.AddPolicy("AllowAll", p =>
+            //    p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+
+            //services.AddAutoMapper(typeof(Startup));
+            //services.AddMvc(option => option.EnableEndpointRouting = false);
+            //services.AddMvc().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            //services.AddMvc().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -131,6 +210,9 @@ namespace WebApplication3
                 app.UseHsts();
             }
 
+
+            app.UseAuthorization();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             if (!env.IsDevelopment())
@@ -139,7 +221,11 @@ namespace WebApplication3
             }
 
             app.UseRouting();
-
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod());
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
-import { catchError, retry, tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 
 import { UserRegistration } from '../models/user.registration.interface';
 import { ConfigService } from '../utils/config.service';
@@ -9,9 +9,9 @@ import { BaseService } from "./base.service";
 
 import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Local } from 'protractor/built/driverProviders';
 
-// Add the RxJS Observable operators we need in this app.
-import '../../rxjs-operators';
 
 @Injectable()
 
@@ -19,11 +19,14 @@ export class UserService extends BaseService {
 
   baseUrl: string = '';
 
-  httpOptions = {
-    headers: new HttpHeaders({
+  get requestHeaders(): { headers: HttpHeaders | { [header: string]: string | string[]; } } {
+    const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-    })
-  };
+      'Accept': 'application/json, text/plain, */*'
+    });
+
+    return { headers };
+  }
 
   // Observable navItem source
   private _authNavStatusSource = new BehaviorSubject<boolean>(false);
@@ -41,22 +44,29 @@ export class UserService extends BaseService {
     this.baseUrl = configService.getApiURI();
   }
 
-  register(email: string, password: string, firstName: string, lastName: string, location: string): Observable<UserRegistration> {
-    let body = JSON.stringify({ email, password, firstName, lastName, location });
-    return this.http.post(this.baseUrl + "/accounts", body, this.httpOptions).pipe(
-      tap((register: UserRegistration) => console.log("User registered")), catchError(this.handleError)
-      );
+  updateTimer(timer: string, interval: number) {
+    let userId = this.current_user;
+    let body = JSON.stringify({"timer": timer, "interval": interval, "userId": userId });
+    return this.http.post<any>(this.baseUrl + '/accounts/timer', body, this.requestHeaders);
+  }
+
+  register(email: string, password: string, firstName: string, lastName: string): Observable<UserRegistration> {
+    let body = JSON.stringify({email, "password": password, "firstName": firstName, "lastName": lastName});
+    return this.http.post<UserRegistration>(this.baseUrl + "/accounts", body, this.requestHeaders);
   };
 
   login(userName, password) {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-
-    return this.http
-      .post(
-        this.baseUrl + '/auth/login',
-        JSON.stringify({ userName, password }), this.httpOptions
-      );
+    return this.http.post<any>(this.baseUrl + '/auth/login', JSON.stringify({ userName, password }), this.requestHeaders)
+    .pipe(map(result => {
+      localStorage.setItem('auth_token', result.auth_token);
+      localStorage.setItem('current_user', result.id);
+      localStorage.setItem('pomodoro', result.pomodoro);
+      localStorage.setItem('shortBreak', result.shortBreak);
+      localStorage.setItem('longBreak', result.longBreak);
+      this.loggedIn = true;
+      this._authNavStatusSource.next(true);
+      return true;
+    }));
   }
 
   logout() {
@@ -64,6 +74,23 @@ export class UserService extends BaseService {
     this.loggedIn = false;
     this._authNavStatusSource.next(false);
   }
+
+  get pomodoro(): number {
+    return parseInt(localStorage.getItem('pomodoro'));
+  }
+
+  get shortBreak(): number {
+    return parseInt(localStorage.getItem('shortBreak'));
+  }
+
+  get longBreak(): number {
+    return parseInt(localStorage.getItem('longBreak'));
+  }
+
+  get current_user(): string {
+    return localStorage.getItem('current_user');
+  }
+
 
   isLoggedIn() {
     return this.loggedIn;

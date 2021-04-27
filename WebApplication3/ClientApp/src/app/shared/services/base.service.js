@@ -7,6 +7,7 @@ var BaseService = /** @class */ (function () {
     }
     BaseService.prototype.handleError = function (error) {
         var applicationError = error.headers.get('Application-Error');
+        console.log(error);
         // either applicationError in header or model error in body
         if (applicationError) {
             return rxjs_1.Observable.throw(applicationError);

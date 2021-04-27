@@ -29,12 +29,12 @@ export class ToDoComponent {
     if (this.user.signedIn == false) {
       this.tasks = [
         {
-          content: 'test 1',
+          content: 'Complete presentation for 3311',
           selected: false,
           deleteSelected: false
         },
         {
-          content: 'test 2',
+          content: 'Study for AI',
           selected: false,
           deleteSelected: false
         }
@@ -42,7 +42,7 @@ export class ToDoComponent {
       //default values for completed task list 
       this.completedTasks = [
         {
-          content: 'Test: you have completed this task',
+          content: 'Complete Eng. Notebook',
           selected: false,
           deleteSelected: false
         }

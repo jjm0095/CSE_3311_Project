@@ -4,36 +4,52 @@
     <div class="row" style="margin-left:3.5rem">
       <div class="col-md-6">
         <form #f="ngForm" novalidate (ngSubmit)="signUp(f)">
+
+          <div class="form-group login">
+            <mat-form-field appearance="outline">
+              <mat-label>First Name</mat-label>
+              <input id="firstName" type="text" ngModel name="firstName" matInput />
+            </mat-form-field>
+          </div>
+
+          <div class="form-group login">
+            <mat-form-field appearance="outline">
+              <mat-label>Last Name</mat-label>
+              <input id="lastName" type="text" ngModel name="lastName" matInput />
+            </mat-form-field>
+          </div>
+
           <div class="form-group login">
             <mat-form-field appearance="outline">
               <mat-label>Email</mat-label>
-              <input type="text" name="inputEmail" matInput [(ngModel)]="inputEmail" />
+              <input id="email" type="text" ngModel name="email" matInput />
             </mat-form-field>
           </div>
           <div class="form-group login">
             <mat-form-field appearance="outline">
               <mat-label>Password</mat-label>
-              <input name="password" matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="inputPassword">
-              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              <input id="password" name="password" matInput [type]="hidePassword ? 'password' : 'text'" [(ngModel)]="inputPassword">
+              <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility' : 'visibility_off' }}</mat-icon>
               </button>
             </mat-form-field>
           </div>
           <div class="form-group login">
             <mat-form-field appearance="outline">
               <mat-label>Confirm Password</mat-label>
-              <input name="passwordConfirm" matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="inputPasswordConfrim">
-              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              <input name="passwordConfirm" matInput [type]="hideConfirm ? 'password' : 'text'" [(ngModel)]="inputPasswordConfrim">
+              <button mat-icon-button matSuffix (click)="hideConfirm = !hideConfirm" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility' : 'visibility_off' }}</mat-icon>
               </button>
             </mat-form-field>
+          </div>
+          <div class="form-group login">
+            <button type="submit" [disabled]="f.invalid || isRequesting" mat-raised-button color="primary" style="min-height:3rem; margin-left:6.5rem" class="btn btn-primary btn-lg">Sign Up</button>
           </div>
         </form>
       </div>
     </div>
-    <div class="row d-flex m-3 justify-content-center">
-      <button mat-raised-button color="primary" style="min-height:3rem;" class="btn btn-primary btn-lg mx-3" (click)="onSignUp()">Sign Up</button>
-    </div>
+
   </div>
 </div>
 <div class="row m-3 justify-content-center">

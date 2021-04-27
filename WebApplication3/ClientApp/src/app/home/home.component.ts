@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { PortalModule } from '@angular/cdk/portal';
 import { User } from './../models/User';
 import { DataService } from './../data.service';
+import { UserService } from '../shared/services/user.service';
+import { MatSnackBar } from '@angular/material';
 
 
 @Component({
@@ -12,26 +14,62 @@ import { DataService } from './../data.service';
 
 export class HomeComponent implements OnInit {
   
-  constructor(private data: DataService) { }
-  user: User;
+  constructor(private data: DataService, private user: UserService, private _configBar: MatSnackBar) { }
+/* user: User;*/
+  //userIntervals = {
+  //  pomodoro: 1500,
+  //  shortBreak: 300,
+  //  longBreak: 900,
+  //}
+
   intervals = {
     pomodoro: 1500,
     shortBreak: 300,
     longBreak: 900,
   };
-  starts = {
-    pomodoro: 1500,
-    shortBreak: 300,
-    longBreak: 900,
-  };
+  //starts = {
+  //  pomodoro: 1500,
+  //  shortBreak: 300,
+  //  longBreak: 900,
+  //};
   ngOnInit(): void {
-    this.data.userMessage.subscribe(message => this.user = message);
-    if (this.user.signedIn == true) {
-      this.userConfigTimers()
+    if (this.user.isLoggedIn()) {
+      this.intervals.pomodoro = this.user.pomodoro;
+      this.pomodoroTimer.startTimeSeconds = this.intervals.pomodoro;
+      this.pomodoroTimer.timeSeconds = this.intervals.pomodoro;
+      this.pomodoroTimer.startTimeString = this.secondsToString(this.intervals.pomodoro);
+      this.pomodoroTimer.timeString = this.secondsToString(this.intervals.pomodoro);
+
+      this.intervals.shortBreak = this.user.shortBreak;
+      this.shortBreakTimer.startTimeSeconds = this.user.shortBreak;
+      this.shortBreakTimer.timeSeconds = this.user.shortBreak;
+      this.shortBreakTimer.startTimeString = this.secondsToString(this.intervals.shortBreak);
+      this.shortBreakTimer.timeString = this.secondsToString(this.intervals.shortBreak);
+
+      this.intervals.longBreak = this.user.longBreak;
+      this.longBreakTimer.startTimeSeconds = this.user.longBreak;
+      this.longBreakTimer.timeSeconds = this.user.longBreak;
+      this.longBreakTimer.startTimeString = this.secondsToString(this.intervals.longBreak);
+      this.longBreakTimer.timeString = this.secondsToString(this.intervals.longBreak);
+
+      this.PomodoroMinutes= this.secondsToDate(this.intervals.pomodoro).getMinutes();
+      this.PomodoroSeconds = this.secondsToDate(this.intervals.pomodoro).getSeconds();
+
+      this.ShortBreakMinutes = this.secondsToDate(this.intervals.shortBreak).getMinutes();
+      this.ShortBreakSeconds = this.secondsToDate(this.intervals.shortBreak).getSeconds();
+
+      this.LongBreakMinutes = this.secondsToDate(this.intervals.longBreak).getMinutes();
+      this.LongBreakSeconds = this.secondsToDate(this.intervals.longBreak).getSeconds();
     }
+    //this.data.userMessage.subscribe(message => this.user = message);
+    //if (this.user.signedIn == true) {
+    //  this.userConfigTimers()
+    //}
   }
   
-  
+  openConfigBar(timer: string) {
+    let loginBarRef = this._configBar.open(timer + " timer successfullly updated.", null, { duration: 10000 });
+  }
 
   secondsToString(value: number): string {
     var date = new Date(0);
@@ -72,8 +110,8 @@ export class HomeComponent implements OnInit {
     timerId: null,
     paused: true,
     iconClass: "glyphicon glyphicon-play",
-    startTimeSeconds: this.starts.pomodoro,
-    startTimeString: this.secondsToString(this.starts.pomodoro)
+    startTimeSeconds: this.intervals.pomodoro,
+    startTimeString: this.secondsToString(this.intervals.pomodoro)
   };
 
   shortBreakTimer = {
@@ -83,8 +121,8 @@ export class HomeComponent implements OnInit {
     timerId: null,
     paused: true,
     iconClass: "glyphicon glyphicon-play",
-    startTimeSeconds: this.starts.shortBreak,
-    startTimeString: this.secondsToString(this.starts.shortBreak)
+    startTimeSeconds: this.intervals.shortBreak,
+    startTimeString: this.secondsToString(this.intervals.shortBreak)
   };
 
   longBreakTimer = {
@@ -94,8 +132,8 @@ export class HomeComponent implements OnInit {
     timerId: null,
     paused: true,
     iconClass: "glyphicon glyphicon-play",
-    startTimeSeconds: this.starts.longBreak,
-    startTimeString: this.secondsToString(this.starts.longBreak)
+    startTimeSeconds: this.intervals.longBreak,
+    startTimeString: this.secondsToString(this.intervals.longBreak)
   }
 
   timer: number = 90;
@@ -266,88 +304,95 @@ export class HomeComponent implements OnInit {
     this.intervals.pomodoro = this.PomodoroMinutes * 60 + this.PomodoroSeconds
     this.pomodoroTimer.timeSeconds = this.intervals.pomodoro;
     this.pomodoroTimer.timeString = this.secondsToString(this.intervals.pomodoro)
-    this.starts.pomodoro = this.PomodoroMinutes * 60 + this.PomodoroSeconds
-    if (this.user.signedIn) {
-      this.user.pomoTime = this.starts.pomodoro
-      this.data.UpdateMessage(this.user);
+    this.intervals.pomodoro = this.PomodoroMinutes * 60 + this.PomodoroSeconds
+    if (this.user.isLoggedIn) {
+      this.user.updateTimer('pomodoro', this.intervals.pomodoro).subscribe();
+      this.openConfigBar("Pomodoro");
+      //this.user.pomoTime = this.intervals.pomodoro
+      //this.data.UpdateMessage(this.user);
     }
-    this.pomodoroTimer.startTimeSeconds = this.starts.pomodoro;
-    this.pomodoroTimer.startTimeString = this.secondsToString(this.starts.pomodoro)
-    if (this.user.signedIn) {
-      this.user.pomoTime = this.starts.pomodoro
-      this.data.UpdateMessage(this.user);
-    }
+    this.pomodoroTimer.startTimeSeconds = this.intervals.pomodoro;
+    this.pomodoroTimer.startTimeString = this.secondsToString(this.intervals.pomodoro)
+    //if (this.user.isLoggedIn) {
+
+    //  //this.user.pomoTime = this.intervals.pomodoro
+    //  //this.data.UpdateMessage(this.user);
+    //}
   }
 
   onSaveShortTimerConfig() {
     this.intervals.shortBreak = this.ShortBreakMinutes * 60 + this.ShortBreakSeconds
     this.shortBreakTimer.timeSeconds = this.intervals.shortBreak;
     this.shortBreakTimer.timeString = this.secondsToString(this.intervals.shortBreak)
-    this.starts.shortBreak = this.ShortBreakMinutes * 60 + this.ShortBreakSeconds
-    if (this.user.signedIn) {
-      this.user.shortTime = this.starts.shortBreak
-      this.data.UpdateMessage(this.user);
+    this.intervals.shortBreak = this.ShortBreakMinutes * 60 + this.ShortBreakSeconds
+    if (this.user.isLoggedIn) {
+      this.user.updateTimer('shortBreak', this.intervals.shortBreak).subscribe();
+      this.openConfigBar("Short Break");
+      //this.user.shortTime = this.intervals.shortBreak
+      //this.data.UpdateMessage(this.user);
     }
-    this.shortBreakTimer.startTimeSeconds = this.starts.shortBreak;
-    this.shortBreakTimer.startTimeString = this.secondsToString(this.starts.shortBreak)
-    if (this.user.signedIn) {
-      this.user.shortTime = this.starts.shortBreak
-      this.data.UpdateMessage(this.user);
-    }
+    this.shortBreakTimer.startTimeSeconds = this.intervals.shortBreak;
+    this.shortBreakTimer.startTimeString = this.secondsToString(this.intervals.shortBreak)
+    //if (this.user.isLoggedIn) {
+    //  //this.user.shortTime = this.intervals.shortBreak
+    //  //this.data.UpdateMessage(this.user);
+    //}
   }
 
   onSaveLongTimerConfig() {
     this.intervals.longBreak = this.LongBreakMinutes * 60 + this.LongBreakSeconds
     this.longBreakTimer.timeSeconds = this.intervals.longBreak;
     this.longBreakTimer.timeString = this.secondsToString(this.intervals.longBreak)
-    this.starts.longBreak = this.LongBreakMinutes * 60 + this.LongBreakSeconds
-    if (this.user.signedIn) {
-      this.user.longTime = this.starts.longBreak
-      this.data.UpdateMessage(this.user);
+    this.intervals.longBreak = this.LongBreakMinutes * 60 + this.LongBreakSeconds
+    if (this.user.isLoggedIn) {
+      this.user.updateTimer('longBreak', this.intervals.longBreak).subscribe();
+      this.openConfigBar("Long Break");
+      //this.user.longTime = this.intervals.longBreak
+      //this.data.UpdateMessage(this.user);
     }
-    this.longBreakTimer.startTimeSeconds = this.starts.longBreak;
-    this.longBreakTimer.startTimeString = this.secondsToString(this.starts.longBreak)
-    if (this.user.signedIn) {
-      this.user.longTime = this.starts.longBreak
-      this.data.UpdateMessage(this.user);
-    }
+    this.longBreakTimer.startTimeSeconds = this.intervals.longBreak;
+    this.longBreakTimer.startTimeString = this.secondsToString(this.intervals.longBreak)
+    //if (this.user.isLoggedIn) {
+    //  //this.user.longTime = this.intervals.longBreak
+    //  //this.data.UpdateMessage(this.user);
+    //}
   }
 
-  userConfigTimers() {
-    //config pomodoro timer whena user is logged in
-    this.intervals.pomodoro = this.user.pomoTime
-    this.pomodoroTimer.timeSeconds = this.intervals.pomodoro;
-    this.pomodoroTimer.timeString = this.secondsToString(this.intervals.pomodoro)
-    this.starts.pomodoro = this.PomodoroMinutes * 60 + this.PomodoroSeconds
-    if (this.user.signedIn) {
-      this.user.pomoTime = this.starts.pomodoro
-      this.data.UpdateMessage(this.user);
-    }
-    this.pomodoroTimer.startTimeSeconds = this.starts.pomodoro;
-    this.pomodoroTimer.startTimeString = this.secondsToString(this.starts.pomodoro)
-    //config short break timer when user is logged in
-    this.intervals.shortBreak = this.user.shortTime
-    this.shortBreakTimer.timeSeconds = this.intervals.shortBreak;
-    this.shortBreakTimer.timeString = this.secondsToString(this.intervals.shortBreak)
-    this.starts.shortBreak = this.ShortBreakMinutes * 60 + this.ShortBreakSeconds
-    if (this.user.signedIn) {
-      this.user.shortTime = this.starts.shortBreak
-      this.data.UpdateMessage(this.user);
-    }
-    this.shortBreakTimer.startTimeSeconds = this.starts.shortBreak;
-    this.shortBreakTimer.startTimeString = this.secondsToString(this.starts.shortBreak)
-    // config long break time when user is logged in
-    this.intervals.longBreak = this.user.longTime
-    this.longBreakTimer.timeSeconds = this.intervals.longBreak;
-    this.longBreakTimer.timeString = this.secondsToString(this.intervals.longBreak)
-    this.starts.longBreak = this.LongBreakMinutes * 60 + this.LongBreakSeconds
-    if (this.user.signedIn) {
-      this.user.longTime = this.starts.longBreak
-      this.data.UpdateMessage(this.user);
-    }
-    this.longBreakTimer.startTimeSeconds = this.starts.longBreak;
-    this.longBreakTimer.startTimeString = this.secondsToString(this.starts.longBreak)
-  }
+  //userConfigTimers() {
+  //  //config pomodoro timer whena user is logged in
+  //  this.intervals.pomodoro = this.user.pomoTime
+  //  this.pomodoroTimer.timeSeconds = this.intervals.pomodoro;
+  //  this.pomodoroTimer.timeString = this.secondsToString(this.intervals.pomodoro)
+  //  this.intervals.pomodoro = this.PomodoroMinutes * 60 + this.PomodoroSeconds
+  //  if (this.user.signedIn) {
+  //    this.user.pomoTime = this.intervals.pomodoro
+  //    this.data.UpdateMessage(this.user);
+  //  }
+  //  this.pomodoroTimer.startTimeSeconds = this.intervals.pomodoro;
+  //  this.pomodoroTimer.startTimeString = this.secondsToString(this.intervals.pomodoro)
+  //  //config short break timer when user is logged in
+  //  this.intervals.shortBreak = this.user.shortTime
+  //  this.shortBreakTimer.timeSeconds = this.intervals.shortBreak;
+  //  this.shortBreakTimer.timeString = this.secondsToString(this.intervals.shortBreak)
+  //  this.intervals.shortBreak = this.ShortBreakMinutes * 60 + this.ShortBreakSeconds
+  //  if (this.user.signedIn) {
+  //    this.user.shortTime = this.intervals.shortBreak
+  //    this.data.UpdateMessage(this.user);
+  //  }
+  //  this.shortBreakTimer.startTimeSeconds = this.intervals.shortBreak;
+  //  this.shortBreakTimer.startTimeString = this.secondsToString(this.intervals.shortBreak)
+  //  // config long break time when user is logged in
+  //  this.intervals.longBreak = this.user.longTime
+  //  this.longBreakTimer.timeSeconds = this.intervals.longBreak;
+  //  this.longBreakTimer.timeString = this.secondsToString(this.intervals.longBreak)
+  //  this.intervals.longBreak = this.LongBreakMinutes * 60 + this.LongBreakSeconds
+  //  if (this.user.signedIn) {
+  //    this.user.longTime = this.intervals.longBreak
+  //    this.data.UpdateMessage(this.user);
+  //  }
+  //  this.longBreakTimer.startTimeSeconds = this.intervals.longBreak;
+  //  this.longBreakTimer.startTimeString = this.secondsToString(this.intervals.longBreak)
+  //}
 
   changeApp(app: string) {
     this.currentApp = app;
