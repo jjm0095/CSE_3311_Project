@@ -6,11 +6,13 @@ import { UserService } from '../shared/services/user.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 
+import { MatSnackBar } from '@angular/material';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
 })
 export class SignupComponent implements OnInit {
+  constructor(private data: DataService, private _dialogBar: MatSnackBar) { }
   ngOnInit(): void {
 
   }
@@ -62,4 +64,12 @@ export class SignupComponent implements OnInit {
           }, errors => console.error(errors));
     }
   }
+
+  openAccountFailBar() {
+    let undoBarRef = this._dialogBar.open("One of the fields was invalid", "X", { duration: 10000, });
+    undoBarRef.onAction().subscribe(() => {
+      this._dialogBar.dismiss();
+    });
+  }
+  */
 }

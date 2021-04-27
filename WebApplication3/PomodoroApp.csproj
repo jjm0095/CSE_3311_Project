@@ -74,6 +74,7 @@
     <None Remove="ClientApp\src\app\shared\utils\config.service.ts" />
     <None Remove="ClientApp\src\app\models\User.ts" />
     <None Remove="ClientApp\src\app\signup\signup.component.ts" />
+    <None Remove="ClientApp\src\app\sound\sound.component.ts" />
     <None Remove="ClientApp\src\app\todo\todo.component.ts" />
     <None Remove="ClientApp\src\assets\.gitkeep" />
     <None Remove="ClientApp\src\assets\alert.mp3" />
@@ -103,6 +104,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\shared\services\user.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\utils\config.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\signup\signup.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\sound\sound.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\todo\todo.component.ts" />
   </ItemGroup>
 

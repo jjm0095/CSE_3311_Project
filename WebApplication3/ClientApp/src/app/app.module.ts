@@ -14,7 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
 import { ToDoComponent } from './todo/todo.component';
-import { MatInputModule, MatOptionModule, MatSelectModule, MatIconModule, MatDialogModule } from '@angular/material';
+import { MatInputModule, MatOptionModule, MatSelectModule, MatIconModule, MatDialogModule, MatSlider } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatListModule } from '@angular/material';
 import { MatCardModule } from '@angular/material';
@@ -26,6 +26,8 @@ import { BreakComponent } from './break/break.component'
 import { BreatheComponent } from './breathe/breathe.component';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { FeedbackComponent } from './feedback/feedback.component';
+import { SoundComponent } from './sound/sound.component';
+import { MatSliderModule } from '@angular/material';
 import { UserService } from './shared/services/user.service';
 import { BaseService } from './shared/services/base.service';
 import { config } from 'process';
@@ -45,6 +47,7 @@ import { LogoutComponent } from './logout/logout.component';
     BreakComponent,
     BreatheComponent,
     FeedbackComponent,
+    SoundComponent,
     SignupComponent
   ],
   imports: [
@@ -61,7 +64,8 @@ import { LogoutComponent } from './logout/logout.component';
       { path: 'break', component: BreakComponent },
       { path: 'breathe', component: BreatheComponent },
       { path: 'feedback', component: FeedbackComponent },
-      { path: 'signup', component: SignupComponent}
+      { path: 'signup', component: SignupComponent },
+      { path: 'sound', component: SoundComponent }
     ]),
     BrowserAnimationsModule,
     MatTabsModule,
@@ -76,6 +80,7 @@ import { LogoutComponent } from './logout/logout.component';
     MatDividerModule,
     MatCheckboxModule,
     MatSnackBarModule,
+    MatSliderModule,
     MatSidenavModule
   ],
   providers: [ UserService, ConfigService ],

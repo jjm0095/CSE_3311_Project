@@ -13,6 +13,7 @@ export class BreakComponent {
   suggestions: Break[] = [];
   //array for storing number of times a suggestion is used
   timesUsed: TimeUsed[] = [];
+  timesPicked = 0
 
   //string for pulling content from input field in html
   newSuggestion: string = '';
@@ -20,6 +21,7 @@ export class BreakComponent {
 
   //string for current break suggestion to be shown, contains nothing by default
   currentBreak: string = '';
+  previousBreak: string = '';
   currentBreakI: number;
 
   //this.currentBreak.suggestion = 'hello';
@@ -50,29 +52,36 @@ export class BreakComponent {
         timesUsed: 0
       }
     ]
+    this.createQueue();
     this.pickSuggestion();
   }
   //picks a random suggestion from the suggestions pool and sends the string to the html file
   pickSuggestion() {
-    //creates random index
-    let index = Math.floor(Math.random() * this.suggestions.length);
-    while (index == this.currentBreakI) {
-      index = Math.floor(Math.random() * this.suggestions.length);
-    }
-    //increments times used by one
-    this.timesUsed[index].timesUsed += 1;
-    this.currentBreak = this.suggestions[index].suggestion;
-  }
-/*
-  getMinTimeUsed() {
-    this.currentBreakI = 0;
-    for (let i = 0; i < this.timesUsed.length; i++) {
-      if (this.timesUsed[i].timesUsed < this.timesUsed[this.currentBreakI].timesUsed) {
-        this.currentBreakI = i;
+    this.previousBreak = this.currentBreak
+    while (this.previousBreak == this.currentBreak) {
+      this.currentBreak = this.suggestions[this.suggestions.length - 1].suggestion;
+      this.suggestions.pop()
+      this.suggestions.splice(0, 0, { suggestion: this.currentBreak })
+      this.timesPicked++
+      if (this.timesPicked = this.suggestions.length * 2) {
+        this.createQueue()
       }
-    } 
+    }
   }
-  */
+  //randomize the positions of each element in the array
+  createQueue() {
+    //this.suggestions.sort() => Math.random() - 0.5);
+    
+    let len = this.suggestions.length
+    while (len > 0) {
+      let index = Math.floor(Math.random() * len)
+      len--
+      let temp = this.suggestions[len].suggestion
+      this.suggestions[len].suggestion = this.suggestions[index].suggestion
+      this.suggestions[index].suggestion = temp
+    }
+    
+  }
 
   //pulls from newSuggestions string and creates and pushes new object with this content to the suggestions array
   addSuggestion() {
@@ -80,7 +89,7 @@ export class BreakComponent {
       this.suggestions.push({ suggestion: this.newSuggestion });
       this.timesUsed.push({ timesUsed: 0 });
       this.newSuggestion = '';
-
     }
+    this.createQueue()
   }
 }

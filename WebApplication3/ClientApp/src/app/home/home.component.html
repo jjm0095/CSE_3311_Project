@@ -81,7 +81,7 @@
           <button class="mt-4" mat-fab style="background-color:rgb(200, 173, 144)" aria-label="Break Suggestions" (click)="changeApp(apps.break)">
             <mat-icon>coffee</mat-icon>
           </button>
-          <button class="mt-4" mat-fab style="    background-color: rgb(145,168,209)" aria-label="Relaxing Sounds" (click)="changeApp(apps.sounds)">
+          <button class="mt-4" mat-fab style="    background-color: rgb(145,168,209)" aria-label="Relaxing Sounds" (click)="changeApp(apps.sound)">
             <mat-icon>music_note</mat-icon>
           </button>
           <button class="mt-4" mat-fab style="background-color:rgb(168,203,168)" aria-label="Breathing Exercises" (click)="changeApp(apps.breathe)">
@@ -91,7 +91,7 @@
         <div class="col-lg-10">
           <app-todo *ngIf="currentApp == apps.todo"></app-todo>
           <app-break *ngIf="currentApp == apps.break"></app-break>
-          <div *ngIf="currentApp == apps.sounds" class="card"></div>
+          <app-sound *ngIf="currentApp == apps.sound"></app-sound>
           <app-breathe *ngIf="currentApp == apps.breathe"></app-breathe>
         </div>
       </div>
