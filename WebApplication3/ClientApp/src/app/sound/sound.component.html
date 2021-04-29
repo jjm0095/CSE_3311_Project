@@ -1,24 +1,39 @@
-<mat-card class="m-3">
+<mat-card class="mt-3">
   <mat-card-subtitle>Relaxing Sounds</mat-card-subtitle>
   
     <div class="card-body d-flex justify-content-center">
       <mat-tab-group>
-        <mat-tab label="Sound 1">
-            <div class="card-body d-flex justify-content-center">
-              <button class="add mx-3" (click)="playSound1()" mat-raised-button>Play</button>
-              <button class="add mx-3" (click)="pauseSound1()" mat-raised-button>Pause</button>
+        <mat-tab label="Rain">
+          <div class="card-body justify-content-center">
+            <div class="row justify-content-center">
+              <mat-slider [(ngModel)]="volume1" min="0.0" max="1.0" step="0.05" color="primary" thumbLabel (change)="changeVolume1()"></mat-slider>
             </div>
-        </mat-tab>
-        <mat-tab label="Sound 2">
-          <div class="card-body d-flex justify-content-center">
-            <button class="add mx-3" (click)="playSound2()" mat-raised-button>Play</button>
-            <button class="add mx-3" (click)="pauseSound2()" mat-raised-button>Pause</button>
+            <div class="row justify-content-center">
+              <button class="add mx-3" [disabled]="sound1Playing" (click)="playSound1()" mat-raised-button>Play</button>
+              <button class="add mx-3" [disabled]="!sound1Playing" (click)="pauseSound1()" mat-raised-button>Pause</button>
+            </div>
           </div>
         </mat-tab>
-        <mat-tab label="Sound 3">
-          <div class="card-body d-flex justify-content-center">
-            <button class="add mx-3" (click)="playSound3()" mat-raised-button>Play</button>
-            <button class="add mx-3" (click)="pauseSound3()" mat-raised-button>Pause</button>
+        <mat-tab label="White Noise">
+          <div class="card-body justify-content-center">
+            <div class="row justify-content-center">
+              <mat-slider [(ngModel)]="volume2" min="0.0" max="1.0" step="0.05" color="primary" thumbLabel (change)="changeVolume2()"></mat-slider>
+            </div>
+            <div class="row justify-content-center">
+              <button class="add mx-3" [disabled]="sound2Playing" (click)="playSound2()" mat-raised-button>Play</button>
+              <button class="add mx-3" [disabled]="!sound2Playing" (click)="pauseSound2()" mat-raised-button>Pause</button>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Brown Noise">
+          <div class="card-body justify-content-center">
+            <div class="row justify-content-center">
+              <mat-slider [(ngModel)]="volume3" min="0.0" max="1.0" step="0.05" color="primary" thumbLabel (change)="changeVolume3()"></mat-slider>
+            </div>
+            <div class="row justify-content-center">
+              <button class="add mx-3" [disabled]="sound3Playing" (click)="playSound3()" mat-raised-button>Play</button>
+              <button class="add mx-3" [disabled]="!sound3Playing" (click)="pauseSound3()" mat-raised-button>Pause</button>
+            </div>
           </div>
         </mat-tab>
       </mat-tab-group>

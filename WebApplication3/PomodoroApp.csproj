@@ -10,6 +10,7 @@
 
     <!-- Set this to true if you enable server-side prerendering -->
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
+    <UserSecretsId>7b820faa-4fc7-4fc4-a29b-a5604098151d</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -46,6 +47,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.10.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.10.0" />
+    <PackageReference Include="System.Linq" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -79,10 +81,22 @@
     <None Remove="ClientApp\src\assets\.gitkeep" />
     <None Remove="ClientApp\src\assets\alert.mp3" />
     <None Remove="ClientApp\src\assets\audio\alert.mp3" />
+    <None Remove="ClientApp\src\assets\audio\sound1.mp3" />
+    <None Remove="ClientApp\src\assets\audio\sound2.mp3" />
+    <None Remove="ClientApp\src\assets\audio\sound3.mp3" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="ClientApp\src\assets\audio\alert.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ClientApp\src\assets\audio\sound1.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ClientApp\src\assets\audio\sound2.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ClientApp\src\assets\audio\sound3.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

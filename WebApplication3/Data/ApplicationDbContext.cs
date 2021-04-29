@@ -16,6 +16,11 @@ namespace PomodoroApp.Data
 
         }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
+
         public Microsoft.EntityFrameworkCore.DbSet<Member> Members { get; set; }
         public Microsoft.EntityFrameworkCore.DbSet<Task> Tasks { get; set; }
     }

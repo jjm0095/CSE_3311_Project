@@ -22,12 +22,13 @@ import { MatDividerModule } from '@angular/material'
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { BreakComponent } from './break/break.component'
 import { BreatheComponent } from './breathe/breathe.component';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { SoundComponent } from './sound/sound.component';
-import { MatSliderModule } from '@angular/material';
+import { MatSliderModule } from '@angular/material/slider';
 import { UserService } from './shared/services/user.service';
 import { BaseService } from './shared/services/base.service';
 import { config } from 'process';
@@ -81,7 +82,8 @@ import { LogoutComponent } from './logout/logout.component';
     MatCheckboxModule,
     MatSnackBarModule,
     MatSliderModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatButtonToggleModule
   ],
   providers: [ UserService, ConfigService ],
   bootstrap: [AppComponent]

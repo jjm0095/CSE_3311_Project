@@ -11,5 +11,6 @@ namespace PomodoroApp.Models.Entities
         public string Content { get; set; }
         public bool Completed { get; set; }
         public bool IsActive { get; set; } // Determines whether or not a task has been removed
+        public string UserId { get; set; }
     }
 }

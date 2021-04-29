@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PomodoroApp.ViewModels;
 using PomodoroApp.Helpers;
+using System.Linq;
+//using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace PomodoroApp.Controllers
 {
@@ -43,6 +46,83 @@ namespace PomodoroApp.Controllers
 
             return Ok();
         }
+        [HttpGet("tasks/{userId}")]
+        public async Task<IActionResult> GetTasks(string userId)
+        {
+            var userEntity = await _userManager.FindByIdAsync(userId);
+
+            if (userEntity == null) return Ok();
+            //var tasks = userEntity.Tasks;
+            var tasks = await _appDbContext.Tasks.Where(o => o.UserId == userId && !o.Completed).ToListAsync();
+
+            if (tasks.Count > 0)
+                return new OkObjectResult(Newtonsoft.Json.JsonConvert.SerializeObject(tasks));
+
+            return Ok();
+        }
+
+        [HttpGet("timer/{userId}")]
+        public async Task<IActionResult> GetTimers(string userId)
+        {
+            var userEntity = await _userManager.FindByIdAsync(userId);
+
+            if (userEntity != null)
+            {
+                var timerModel = new UserTimerModel()
+                {
+                    PomodoroInterval = userEntity.PomodoroDuration,
+                    ShortBreakInterval = userEntity.ShortBreakDuration,
+                    LongBreakInterval = userEntity.LongBreakDuration,
+                };
+
+                return new OkObjectResult(Newtonsoft.Json.JsonConvert.SerializeObject(timerModel));
+            }
+
+
+            return Ok();
+
+        }
+        
+        [HttpPost("addTask")]
+        public async Task<IActionResult> AddTask([FromBody] AddTaskViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var userEntity = await _userManager.FindByIdAsync(model.UserId);
+            var newTask = new Models.Entities.Task()
+            {
+                Content = model.Content,
+                Completed = false,
+                IsActive = true,
+                UserId = model.UserId,
+            };
+
+            await _appDbContext.Tasks.AddAsync(newTask);
+
+            await _appDbContext.SaveChangesAsync();
+
+            return new OkObjectResult(Newtonsoft.Json.JsonConvert.SerializeObject(newTask));
+        }
+
+        [HttpPut("modifyTask")]
+        public async Task<IActionResult> ModifyTask([FromBody] AddTaskViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var modifiedTask = await _appDbContext.Tasks.Where(o => o.UserId == model.UserId && !o.Completed).FirstOrDefaultAsync();
+            modifiedTask.Completed = model.Completed;
+
+            await _appDbContext.SaveChangesAsync();
+
+            return Ok();
+        }
+
 
         //POST api/accounts/timer
         [HttpPost("timer")]

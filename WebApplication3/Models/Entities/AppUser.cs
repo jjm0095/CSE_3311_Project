@@ -13,14 +13,14 @@ namespace PomodoroApp.Models.Entities
         public int PomodoroDuration { get; set; }
         public int ShortBreakDuration { get; set; }
         public int LongBreakDuration { get; set; }
-        public List<Task> Tasks { get; set; }
+
+        public ICollection<Task> Tasks { get; set; }
 
         public AppUser()
         {
             this.PomodoroDuration = 1500;
             this.ShortBreakDuration = 300;
             this.LongBreakDuration = 900;
-            this.Tasks = new List<Task>();
         }
     }
 }

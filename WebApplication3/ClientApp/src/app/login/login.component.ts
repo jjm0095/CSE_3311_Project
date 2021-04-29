@@ -101,7 +101,6 @@ export class LoginComponent implements OnInit {
           result => {
             if (result) {
               this.openLoginBar();
-              location.reload();
               this.router.navigate(['/']);
             }
           },

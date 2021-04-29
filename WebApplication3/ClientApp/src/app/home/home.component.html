@@ -1,22 +1,22 @@
-<h1 class="m-3" style="text-align: center;">Pomodoro Timer</h1>
+<h1 class="m-3" style="text-align: center; color: #ffffff; font-weight:600;">MyPomodoro</h1>
 <br />
-<div class="card" style="width: 40rem; margin: auto;">
+<div class="card" style="width: 40rem; margin: auto; background-color: #fbfbfe">
   <div class="card-body d-flex justify-content-center">
     <mat-tab-group>
       <mat-tab label="Pomodoro">
-        <h1 class="m-4" style="text-align: center; font-size: 120px;">{{pomodoroTimer.timeString}}</h1>
+        <h1 class="m-4" style="text-align: center; font-size: 120px; color:dimgray">{{pomodoroTimer.timeString}}</h1>
         <div class="d-flex justify-content-center">
           <button mat-raised-button color="primary" class="mx-3" (click)="onPomodoroButton()">{{pomodoroTimer.buttonText}}</button>
         </div>
       </mat-tab>
       <mat-tab label="Short Break">
-        <h1 class="m-4" style="text-align: center; font-size: 120px;">{{shortBreakTimer.timeString}}</h1>
+        <h1 class="m-4" style="text-align: center; font-size: 120px; color:dimgray;">{{shortBreakTimer.timeString}}</h1>
         <div class="d-flex justify-content-center">
           <button mat-raised-button color="primary" class="btn btn-primary btn-lg mx-3" (click)="onShortBreakButton()">{{shortBreakTimer.buttonText}}</button>
         </div>
       </mat-tab>
       <mat-tab label="Long Break">
-        <h1 class="m-4" style="text-align: center; font-size: 120px;">{{longBreakTimer.timeString}}</h1>
+        <h1 class="m-4" style="text-align: center; font-size: 120px; color:dimgray;">{{longBreakTimer.timeString}}</h1>
         <div class="d-flex justify-content-center">
           <button mat-raised-button color="primary" class="btn btn-primary btn-lg mx-3" (click)="onLongBreakButton()">{{longBreakTimer.buttonText}}</button>
         </div>
@@ -70,29 +70,35 @@
     </mat-tab-group>
   </div>
 </div>
-<div class="card mt-3" style="width: 40rem; margin: auto;">
+<div class="card mt-3" style="width: 40rem; margin: auto; background-color: #fbfbfe">
   <div class="card-body justify-content-center">
     <mat-card-content>
-      <div class="row">
-        <div class="col-sm-2">
-          <button class="mt-4" mat-fab style="background-color:rgb(222,120,50)" aria-label="To-Do List" (click)="changeApp(apps.todo)">
-            <mat-icon>list</mat-icon>
-          </button>
-          <button class="mt-4" mat-fab style="background-color:rgb(200, 173, 144)" aria-label="Break Suggestions" (click)="changeApp(apps.break)">
-            <mat-icon>coffee</mat-icon>
-          </button>
-          <button class="mt-4" mat-fab style="    background-color: rgb(145,168,209)" aria-label="Relaxing Sounds" (click)="changeApp(apps.sound)">
-            <mat-icon>music_note</mat-icon>
-          </button>
-          <button class="mt-4" mat-fab style="background-color:rgb(168,203,168)" aria-label="Breathing Exercises" (click)="changeApp(apps.breathe)">
-            <mat-icon>self_improvement</mat-icon>
-          </button>
+      <div class="row justify-content-center">
+        <div class="row">
+          <mat-button-toggle-group name="appSelection">
+            <mat-button-toggle aria-label="To-Do List" (click)="changeApp(apps.todo)" checked="true">
+              <mat-icon style="color: dimgray;">list</mat-icon>
+              <span style="color: dimgray;"> To-Do</span>
+            </mat-button-toggle>
+            <mat-button-toggle aria-label="Break Suggestions" (click)="changeApp(apps.break)">
+              <mat-icon style="color: dimgray;">coffee</mat-icon>
+              <span style="color: dimgray;"> Breaks</span>
+            </mat-button-toggle>
+            <mat-button-toggle aria-label="Relaxing Sounds" (click)="changeApp(apps.sound)">
+              <mat-icon style="color: dimgray;">music_note</mat-icon>
+              <span style="color: dimgray;"> Sounds</span>
+            </mat-button-toggle>
+            <mat-button-toggle aria-label="Breathing Exercises" (click)="changeApp(apps.breathe)">
+              <mat-icon style="color: dimgray;">self_improvement</mat-icon>
+              <span style="color: dimgray;"> Breathe</span>
+            </mat-button-toggle>
+          </mat-button-toggle-group>
         </div>
         <div class="col-lg-10">
-          <app-todo *ngIf="currentApp == apps.todo"></app-todo>
-          <app-break *ngIf="currentApp == apps.break"></app-break>
-          <app-sound *ngIf="currentApp == apps.sound"></app-sound>
-          <app-breathe *ngIf="currentApp == apps.breathe"></app-breathe>
+          <app-todo *ngIf="currentApp === apps.todo"></app-todo>
+          <app-break *ngIf="currentApp === apps.break"></app-break>
+          <app-sound *ngIf="currentApp === apps.sound"></app-sound>
+          <app-breathe *ngIf="currentApp === apps.breathe"></app-breathe>
         </div>
       </div>
     </mat-card-content>

@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Local } from 'protractor/built/driverProviders';
+import { User } from '../../models/User';
 
 
 @Injectable()
@@ -48,6 +49,27 @@ export class UserService extends BaseService {
     let userId = this.current_user;
     let body = JSON.stringify({"timer": timer, "interval": interval, "userId": userId });
     return this.http.post<any>(this.baseUrl + '/accounts/timer', body, this.requestHeaders);
+  }
+
+  getTasks() {
+    let userId = this.current_user;
+    return this.http.get<any>(this.baseUrl + `/accounts/tasks/${userId}`, this.requestHeaders);
+  }
+
+  getTimers() {
+    let userId = this.current_user;
+    return this.http.get<any>(this.baseUrl + `/accounts/timer/${userId}`, this.requestHeaders);
+  }
+
+  addTask(content: string) {
+    let userId = this.current_user;
+    let body = JSON.stringify({"id": null, "content": content, "completed": false, "isActive": true, "userId": userId });
+    return this.http.post<any>(this.baseUrl + '/accounts/addTask', body, this.requestHeaders);
+  }
+
+  modifyTask(id: number, completed: boolean, isActive: boolean) {
+    let body = JSON.stringify({ "id": null, "content": null, "completed": completed, "isActive": isActive, "userId": null });
+    return this.http.put<any>(this.baseUrl + '/accounts/modifyTask', body, this.requestHeaders);
   }
 
   register(email: string, password: string, firstName: string, lastName: string): Observable<UserRegistration> {
